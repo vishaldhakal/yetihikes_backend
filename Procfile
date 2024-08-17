@@ -1,0 +1,1 @@
+web: gunicorn yetihikes.wsgi --log-file -
