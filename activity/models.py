@@ -71,7 +71,7 @@ class Activity(models.Model):
     tour_highlights = tinymce_models.HTMLField()
     tour_includes = tinymce_models.HTMLField()
     tour_excludes = tinymce_models.HTMLField()
-    createdAt = models.DateTimeField(auto_created=True)
+    createdAt = models.DateTimeField(auto_now=True)
     availableStart = models.DateTimeField()
     availableEnd = models.DateTimeField()
     trek_map = models.FileField(blank=True)

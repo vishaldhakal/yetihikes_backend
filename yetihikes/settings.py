@@ -85,6 +85,9 @@ WSGI_APPLICATION = 'yetihikes.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = None
+
+
 """ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -92,7 +95,7 @@ WSGI_APPLICATION = 'yetihikes.wsgi.application'
     }
 } """
 
-DATA_UPLOAD_MAX_MEMORY_SIZE = None
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
