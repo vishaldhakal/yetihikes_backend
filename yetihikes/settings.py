@@ -180,6 +180,7 @@ UNFOLD = {
 SUMMERNOTE_CONFIG = {
     'summernote': {
         'width': '100%',
+        'height': '500px',
         'toolbar': [
             ['style', ['style',]],
             ['font', ['fontname', 'fontsize', 'bold', 'italic', 'strikethrough', 'clear',]],
