@@ -75,7 +75,8 @@ class ActivityAdmin(ModelAdmin):
                 ("activity_title", "slug"),
                 ("destination", "activity_category", "activity_region"),
                 ("price", "priceSale"),
-                ("popular", "best_selling", "featured")
+                ("popular", "best_selling", "featured"),
+                ("youtube_link")
             )
         }),
         ("Meta Information", {
