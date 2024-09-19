@@ -71,13 +71,13 @@ class Activity(models.Model):
     tour_highlights = tinymce_models.HTMLField()
     tour_includes = tinymce_models.HTMLField()
     tour_excludes = tinymce_models.HTMLField()
+    youtube_link = models.URLField(max_length=1000,blank=True)
     createdAt = models.DateTimeField(auto_now=True)
     availableStart = models.DateField()
     availableEnd = models.DateField()
     trek_map = models.FileField(blank=True)
     altitude_chart = models.FileField(blank=True)
     additional_info = tinymce_models.HTMLField(blank=True)
-
 
     class Meta:
         ordering = ['createdAt']
