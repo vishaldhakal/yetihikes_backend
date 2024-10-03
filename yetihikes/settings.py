@@ -157,12 +157,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.resend.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'info@yetihikes.com'
-EMAIL_HOST_PASSWORD = '20@Hikingbees20.'
+EMAIL_HOST_USER = 'resend'
+EMAIL_HOST_PASSWORD = os.getenv("RESEND_APIKEY", default="")
 
 
 UNFOLD = {
@@ -234,3 +234,4 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 CSRF_TRUSTED_ORIGINS = ['https://4963-110-44-120-22.ngrok.io',]
+
