@@ -5,7 +5,13 @@ from django.dispatch import receiver
 from django.utils.text import slugify
     
 class TravelGuide(models.Model):
+    CATEGORY_CHOICES = (
+        ('Nepal Travel Info','Nepal Travel Info'),
+        ('Trekking Info','Trekking Info'),
+    )
+
     name = models.CharField(max_length=200) 
+    category = models.CharField(max_length=200, choices=CATEGORY_CHOICES,default='Nepal Travel Info')
     slug = models.CharField(max_length=300)
     title = models.CharField(max_length=500)
     guide_duration_to_read = models.CharField(max_length=100,blank=True)
