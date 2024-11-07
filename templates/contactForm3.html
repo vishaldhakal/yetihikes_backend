@@ -30,15 +30,49 @@
    <h1>Yeti Hikes Booking Form Submission</h1>
    <div class="center">
       <div>
-         <p> <span class="fw-bold">Name</span> : <span>{{name}}</span> </p>
-         <p> <span class="fw-bold">Booking Date</span> : <span>{{booking_date}}</span> </p>
-         <p> <span class="fw-bold">No of Guests</span> : <span>{{no_of_guests}}</span> </p>
-         <p> <span class="fw-bold">Price</span> : <span>{{total_price}}</span> </p>
-         <p> <span class="fw-bold">Email</span> : <span>{{email}}</span> </p>
-         <p> <span class="fw-bold">Phone</span> : <span>{{phone}}</span> </p>
-         <p> <span class="fw-bold">Message</span> : <span>{{message}}</span> </p>
-         <p> <span class="fw-bold">Activity</span> : <span> </span><a
-               href="https://hikingbees.com/activity/{{slug}}">{{activity}}</a> </p>
+         <!-- Required Fields -->
+         <p><span class="fw-bold">Name</span>: <span>{{name}}</span></p>
+         <p><span class="fw-bold">Booking Date</span>: <span>{{booking_date}}</span></p>
+         <p><span class="fw-bold">No of Guests</span>: <span>{{no_of_guests}}</span></p>
+         <p><span class="fw-bold">Price</span>: <span>{{total_price}}</span></p>
+         <p><span class="fw-bold">Email</span>: <span>{{email}}</span></p>
+
+         <!-- Optional Fields -->
+         {% if phone %}
+         <p><span class="fw-bold">Phone</span>: <span>{{phone}}</span></p>
+         {% endif %}
+
+         {% if message %}
+         <p><span class="fw-bold">Message</span>: <span>{{message}}</span></p>
+         {% endif %}
+
+         <!-- Emergency Contact Section (only shown if any emergency contact info exists) -->
+         {% if emergency_contact_name or emergency_phone or emergency_email or emergency_address or
+         emergency_relationship %}
+         <h2>Emergency Contact Information</h2>
+         {% if emergency_contact_name %}
+         <p><span class="fw-bold">Emergency Contact Name</span>: <span>{{emergency_contact_name}}</span></p>
+         {% endif %}
+
+         {% if emergency_address %}
+         <p><span class="fw-bold">Emergency Address</span>: <span>{{emergency_address}}</span></p>
+         {% endif %}
+
+         {% if emergency_phone %}
+         <p><span class="fw-bold">Emergency Phone</span>: <span>{{emergency_phone}}</span></p>
+         {% endif %}
+
+         {% if emergency_email %}
+         <p><span class="fw-bold">Emergency Email</span>: <span>{{emergency_email}}</span></p>
+         {% endif %}
+
+         {% if emergency_relationship %}
+         <p><span class="fw-bold">Emergency Contact Relationship</span>: <span>{{emergency_relationship}}</span></p>
+         {% endif %}
+         {% endif %}
+
+         <p><span class="fw-bold">Activity</span>: <span><a
+                  href="https://hikingbees.com/activity/{{slug}}">{{activity}}</a></span></p>
       </div>
    </div>
 </body>

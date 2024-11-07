@@ -118,41 +118,51 @@ def BookingSubmission(request):
         email = "Yeti Hikes <info@yetihikes.com>"
         headers = {'Reply-To': request.POST["email"]}
 
-        name = request.POST.get("name", "")
-        address = request.POST.get("address", "")
-        emaill = request.POST.get("email", "")
+        # Required fields
+        name = request.POST.get("name")
+        address = request.POST.get("address")
+        emaill = request.POST.get("email")
+        no_of_guests = int(request.POST.get("no_of_guests", 0))
+        total_price = float(request.POST.get("total_price", 0.0))
+        booking_date_str = request.POST.get("booking_date")
+
+        # Optional fields
         phone = request.POST.get("phone", "")
         message = request.POST.get("message", "")
-        no_of_guests = int(request.POST.get("no_of_guests", "0"))
-        total_price = float(request.POST.get("total_price", "0.0"))
-        booking_date_str = request.POST.get("booking_date", "")
         arrival_date_str = request.POST.get("arrival_date", "")
-        private_booking = request.POST.get("private_booking", "False")
         departure_date_str = request.POST.get("departure_date", "")
+        private_booking = request.POST.get("private_booking", "False")
 
+        # Parse dates
         booking_date = datetime.strptime(booking_date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
         arrival_date = datetime.strptime(arrival_date_str, '%Y-%m-%dT%H:%M:%S.%fZ') if arrival_date_str else None
         departure_date = datetime.strptime(departure_date_str, '%Y-%m-%dT%H:%M:%S.%fZ') if departure_date_str else None
 
-        emergency_contact_name = request.POST.get("emergency_contact_name", "")
-        emergency_address = request.POST.get("emergency_address", "")
-        emergency_phone = request.POST.get("emergency_phone", "")
-        emergency_email = request.POST.get("emergency_email", "")
-        emergency_relationship = request.POST.get("emergency_relationship", "")
-
         act = Activity.objects.get(slug=request.POST["slug"])
 
+        # Create context with required fields
         contex = {
-            "name": request.POST["name"],
-            "email": request.POST["email"],
-            "phone": request.POST["phone"],
-            "message": request.POST["message"],
-            "total_price": request.POST["total_price"],
-            "no_of_guests": request.POST["no_of_guests"],
-            "booking_date": request.POST["booking_date"],
+            "name": name,
+            "email": emaill,
+            "phone": phone,
+            "message": message,
+            "total_price": total_price,
+            "no_of_guests": no_of_guests,
+            "booking_date": booking_date_str,
             "activity": act.activity_title,
-            "slug": request.POST["slug"]
+            "slug": request.POST["slug"],
         }
+
+        # Add emergency contact details to context only if they exist
+        emergency_fields = {
+            "emergency_contact_name": request.POST.get("emergency_contact_name", ""),
+            "emergency_address": request.POST.get("emergency_address", ""),
+            "emergency_phone": request.POST.get("emergency_phone", ""),
+            "emergency_email": request.POST.get("emergency_email", "")
+        }
+        
+        # Only add non-empty emergency fields to context
+        contex.update({k: v for k, v in emergency_fields.items() if v})
 
         html_content = render_to_string("contactForm3.html", contex)
         text_content = strip_tags(html_content)
@@ -161,7 +171,7 @@ def BookingSubmission(request):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-
+        # Create booking with required fields
         new_booking = ActivityBooking.objects.create(
             activity=act,
             name=name,
@@ -171,32 +181,29 @@ def BookingSubmission(request):
             total_price=total_price,
             booking_date=booking_date
         )
-        if "private_booking" in request.POST:
-            if private_booking == "True":
-                new_booking.is_private = True
-            else:
-                new_booking.is_private = False
-        if "phone" in request.POST:
-            new_booking.phone = phone
-        if "message" in request.POST:
-            new_booking.message = message
-        if "arrival_date" in request.POST:
-            new_booking.arrival_date = arrival_date
-        if "departure_date" in request.POST:
-            new_booking.departure_date = departure_date
-        if "emergency_contact_name" in request.POST:
-            new_booking.emergency_contact_name = emergency_contact_name
-        if "emergency_address" in request.POST:
-            new_booking.emergency_address = emergency_address
-        if "emergency_phone" in request.POST:
-            new_booking.emergency_phone = emergency_phone
-        if "emergency_email" in request.POST:
-            new_booking.emergency_email = emergency_email
-        if "emergency_relationship" in request.POST:
-            new_booking.emergency_relationship = emergency_relationship
+
+        # Set optional fields only if they exist in request.POST
+        optional_fields = {
+            'is_private': private_booking == "True" if "private_booking" in request.POST else None,
+            'phone': phone if phone else None,
+            'message': message if message else None,
+            'arrival_date': arrival_date if arrival_date else None,
+            'departure_date': departure_date if departure_date else None,
+            'emergency_contact_name': emergency_fields['emergency_contact_name'] if emergency_fields['emergency_contact_name'] else None,
+            'emergency_address': emergency_fields['emergency_address'] if emergency_fields['emergency_address'] else None,
+            'emergency_phone': emergency_fields['emergency_phone'] if emergency_fields['emergency_phone'] else None,
+            'emergency_email': emergency_fields['emergency_email'] if emergency_fields['emergency_email'] else None,
+            'emergency_relationship': request.POST.get('emergency_relationship', '') if 'emergency_relationship' in request.POST else None
+        }
+
+        # Update booking with non-None optional fields
+        for field, value in optional_fields.items():
+            if value is not None:
+                setattr(new_booking, field, value)
+
         new_booking.save()
 
-        return HttpResponse("Sucess")
+        return HttpResponse("Success")
     else:
         return HttpResponse("Not post req")
 
