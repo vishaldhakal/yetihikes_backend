@@ -1,13 +1,10 @@
 from django.contrib import admin
-from .models import GuideAuthour,TravelGuide,TravelGuideCategory,TravelGuideRegion
+from .models import TravelGuide
 from unfold.admin import ModelAdmin
 from tinymce.widgets import TinyMCE
 
-admin.site.register(GuideAuthour, ModelAdmin)
-admin.site.register(TravelGuideCategory, ModelAdmin)
-admin.site.register(TravelGuideRegion, ModelAdmin)
-
 class TravelGuideAdmin(ModelAdmin):
+   readonly_fields = ('slug',)
    def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'guide_content':
             kwargs['widget'] = TinyMCE()

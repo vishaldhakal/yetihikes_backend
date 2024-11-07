@@ -1,5 +1,8 @@
 from django.db import models
 from tinymce import models as tinymce_models
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 class Destination(models.Model):
      meta_title = models.CharField(max_length=200,blank=True)
@@ -190,3 +193,25 @@ class ItineraryActivity(models.Model):
 
     def __str__(self) -> str:
           return self.title
+
+
+
+@receiver(pre_save, sender=ActivityCategory)
+@receiver(pre_save, sender=ActivityRegion)
+def update_slug(sender, instance, **kwargs):
+    if not instance.pk:  # This is a new instance
+        instance.slug = slugify(instance.title)
+    elif (
+        not instance.slug or instance.title != sender.objects.get(pk=instance.pk).title
+    ):
+        instance.slug = slugify(instance.title)
+
+
+@receiver(pre_save, sender=Activity)
+def update_slug2(sender, instance, **kwargs):
+    if not instance.pk:  # This is a new instance
+        instance.slug = slugify(instance.activity_title)
+    elif (
+        not instance.slug or instance.activity_title != sender.objects.get(pk=instance.pk).activity_title
+    ):
+        instance.slug = slugify(instance.activity_title)

@@ -58,6 +58,7 @@ class ActivityAdmin(ModelAdmin):
         ActivityFAQInline,
         ActivityPricingInline,
     ]
+    readonly_fields = ('slug',)
 
     list_display = (
         "__str__",
@@ -155,6 +156,7 @@ class DestinationAdmin(ModelAdmin):
         return super().formfield_for_dbfield(db_field, **kwargs)
 
 class ActivityCategoryAdmin(ModelAdmin):
+    readonly_fields = ('slug',)
     fieldsets = (
         ("Basic Information", {
             "fields": (
@@ -185,6 +187,7 @@ class ActivityCategoryAdmin(ModelAdmin):
         return super().formfield_for_dbfield(db_field, **kwargs)
 
 class ActivityRegionAdmin(ModelAdmin):
+    readonly_fields = ('slug',)
     fieldsets = (
         ("Basic Information", {
             "fields": (

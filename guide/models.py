@@ -1,38 +1,10 @@
 from django.db import models
 from tinymce import models as tinymce_models
-
-
-class GuideAuthour(models.Model):
-    name = models.CharField(max_length=200) 
-    role = models.CharField(max_length=200,default="Travel Guide")
-    phone = models.CharField(max_length=200)
-    picture = models.FileField()
-    about = models.TextField(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return self.name
-
-class TravelGuideRegion(models.Model):
-     title = models.CharField(max_length=200)
-     slug = models.SlugField(blank=True)
-     image = models.FileField(blank=True)
-     image_alt_description = models.CharField(max_length=200,default="Alt Description")
-
-     def __str__(self) -> str:
-          return self.title
-
-class TravelGuideCategory(models.Model):
-    category_name = models.CharField(max_length=200, primary_key=True)
-    category_image = models.FileField(blank=True)
-
-    def __str__(self):
-        return self.category_name
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from django.utils.text import slugify
     
 class TravelGuide(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=200) 
     slug = models.CharField(max_length=300)
     title = models.CharField(max_length=500)
@@ -40,11 +12,10 @@ class TravelGuide(models.Model):
     thumbnail_image = models.FileField()
     thumbnail_image_alt_description = models.CharField(max_length=300)
     guide_content = tinymce_models.HTMLField(blank=True)
-    guide = models.ForeignKey(GuideAuthour, on_delete=models.DO_NOTHING)
-    guide_category = models.ManyToManyField(TravelGuideCategory, related_name='guide_categories')
-    guide_region = models.ManyToManyField(TravelGuideRegion, related_name='guide_regions')
     meta_title = models.CharField(max_length=200)
-    meta_description = models.TextField()
+    meta_description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -52,3 +23,13 @@ class TravelGuide(models.Model):
     def __str__(self):
         return self.title
 
+
+
+@receiver(pre_save, sender=TravelGuide)
+def update_slug(sender, instance, **kwargs):
+    if not instance.pk:  # This is a new instance
+        instance.slug = slugify(instance.name)
+    elif (
+        not instance.slug or instance.name != sender.objects.get(pk=instance.pk).name
+    ):
+        instance.slug = slugify(instance.name)
