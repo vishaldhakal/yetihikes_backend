@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TeamMember,Testimonial,LegalDocument,FeaturedTour,Affiliations,SiteConfiguration,Partners,TreekingNavDropdown,DestinationNavDropdown,OtherActivitiesNavDropdown,ClimbingNavDropdown,InnerDropdown,FAQ,FAQCategory,NewsletterSubscription
+from .models import TeamMember,Testimonial,LegalDocument,FeaturedTour,Affiliations,SiteConfiguration,Partners,TreekingNavDropdown,DestinationNavDropdown,OtherActivitiesNavDropdown,ClimbingNavDropdown,InnerDropdown,FAQ,FAQCategory,NewsletterSubscription,GuideDropdown
 from solo.admin import SingletonModelAdmin
 from django.contrib.auth.models import User, Group
 from unfold.admin import ModelAdmin
@@ -15,6 +15,7 @@ class UnfoldSingletonModelAdmin(SingletonModelAdmin, ModelAdmin):
 
 
 admin.site.register(SiteConfiguration, UnfoldSingletonModelAdmin)
+admin.site.register(GuideDropdown, UnfoldSingletonModelAdmin)
 admin.site.register(FeaturedTour, UnfoldSingletonModelAdmin)
 admin.site.register(DestinationNavDropdown, UnfoldSingletonModelAdmin)
 admin.site.register(ClimbingNavDropdown, UnfoldSingletonModelAdmin)

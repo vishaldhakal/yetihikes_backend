@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import TeamMember,FeaturedTour,Testimonial,SiteConfiguration,Affiliations,Partners,TreekingNavDropdown,DestinationNavDropdown,OtherActivitiesNavDropdown,ClimbingNavDropdown,InnerDropdown,FAQ,FAQCategory,LegalDocument
+from .models import TeamMember,FeaturedTour,Testimonial,SiteConfiguration,Affiliations,Partners,TreekingNavDropdown,DestinationNavDropdown,OtherActivitiesNavDropdown,ClimbingNavDropdown,InnerDropdown,FAQ,FAQCategory,LegalDocument,GuideDropdown
 from activity.serializers import ActivityCategorySerializer,ActivitySmallSerializer,ActivityRegionSerializer,DestinationSerializer
+from guide.serializers import TravelGuideSerializer
 
 
 class LegalDocumentSerializer(serializers.ModelSerializer):
@@ -101,5 +102,15 @@ class TeamMemberSlugSerializer(serializers.ModelSerializer):
 class TestimonialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Testimonial
+        fields = '__all__'
+        depth = 2
+
+
+class GuideDropdownSerializer(serializers.ModelSerializer):
+
+    guides = TravelGuideSerializer(many=True)
+
+    class Meta:
+        model = GuideDropdown
         fields = '__all__'
         depth = 2

@@ -13,7 +13,7 @@ class HTMLField(serializers.CharField):
 
 
 class TravelGuideSerializer(serializers.ModelSerializer):
-    blog_content = serializers.SerializerMethodField()
+    guide_content = serializers.SerializerMethodField()
     
     class Meta:
         model = TravelGuide
@@ -21,7 +21,7 @@ class TravelGuideSerializer(serializers.ModelSerializer):
         depth = 2
         ordering = ['-created_at']
     
-    def get_blog_content(self, obj):
+    def get_guide_content(self, obj):
         html_string = obj.guide_content
         soup = BeautifulSoup(html_string, 'html.parser')
         toc_div = soup.find('div', class_='mce-toc')

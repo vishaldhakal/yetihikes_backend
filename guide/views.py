@@ -27,7 +27,7 @@ def guide_list_slug(request):
 def guide_single(request,slug):
     if request.method == 'GET':
         posts = TravelGuide.objects.get(slug=slug)
-        html_string = posts.blog_content
+        html_string = posts.guide_content
         soup = BeautifulSoup(html_string, 'html.parser')
         toc_div = soup.find('div', class_='mce-toc')
         if toc_div is not None:
