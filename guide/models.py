@@ -29,13 +29,3 @@ class TravelGuide(models.Model):
     def __str__(self):
         return self.title
 
-
-
-@receiver(pre_save, sender=TravelGuide)
-def update_slug(sender, instance, **kwargs):
-    if not instance.pk:  # This is a new instance
-        instance.slug = slugify(instance.name)
-    elif (
-        not instance.slug or instance.name != sender.objects.get(pk=instance.pk).name
-    ):
-        instance.slug = slugify(instance.name)

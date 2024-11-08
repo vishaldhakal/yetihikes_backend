@@ -195,23 +195,3 @@ class ItineraryActivity(models.Model):
           return self.title
 
 
-
-@receiver(pre_save, sender=ActivityCategory)
-@receiver(pre_save, sender=ActivityRegion)
-def update_slug(sender, instance, **kwargs):
-    if not instance.pk:  # This is a new instance
-        instance.slug = slugify(instance.title)
-    elif (
-        not instance.slug or instance.title != sender.objects.get(pk=instance.pk).title
-    ):
-        instance.slug = slugify(instance.title)
-
-
-@receiver(pre_save, sender=Activity)
-def update_slug2(sender, instance, **kwargs):
-    if not instance.pk:  # This is a new instance
-        instance.slug = slugify(instance.activity_title)
-    elif (
-        not instance.slug or instance.activity_title != sender.objects.get(pk=instance.pk).activity_title
-    ):
-        instance.slug = slugify(instance.activity_title)

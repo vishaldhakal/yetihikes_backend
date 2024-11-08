@@ -4,7 +4,6 @@ from unfold.admin import ModelAdmin
 from tinymce.widgets import TinyMCE
 
 class TravelGuideAdmin(ModelAdmin):
-   readonly_fields = ('slug',)
    def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'guide_content':
             kwargs['widget'] = TinyMCE()
