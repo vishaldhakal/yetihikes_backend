@@ -110,22 +110,6 @@ class ActivitySmallestSerializer(serializers.ModelSerializer):
         model = Activity
         fields = ('id','slug', 'activity_title','destination','duration','price','priceSale','trip_grade','max_group_size','best_time')
 
-class ActivitySerializer(serializers.ModelSerializer):
-    itinerary = ItineraryActivitySerializer(many=True, read_only=True)
-    gallery = ActivityImageSerializer(many=True,read_only=True)
-    faqs = ActivityFAQSerializer(many=True,read_only=True)
-    enquiries = ActivityEnquirySerializer(many=True,read_only=True)
-    testimonials = ActivityTestimonialSerializer(many=True,read_only=True)
-    prices = ActivityPricingSerializer(many=True,read_only=True)
-    realted_activities = ActivitySmallestSerializer(many=True,read_only=True)
-    related_blogs = PostSmallSerializer(many=True,read_only=True)
-    
-    class Meta:
-        model = Activity
-        fields = '__all__'
-        depth = 2
-
-
 class ActivitySmallSerializer(serializers.ModelSerializer):
     destination = DestinationSerializerSmall()
     enquiries = ActivityEnquirySerializer(many=True,read_only=True)
@@ -133,6 +117,22 @@ class ActivitySmallSerializer(serializers.ModelSerializer):
         model = Activity
         fields = ('id','slug', 'activity_title', 'activity_category','enquiries','location','duration','price','coverImg','ratings','popular','best_selling','destination','activity_region','priceSale','youtube_link')
         depth = 1
+        
+class ActivitySerializer(serializers.ModelSerializer):
+    itinerary = ItineraryActivitySerializer(many=True, read_only=True)
+    gallery = ActivityImageSerializer(many=True,read_only=True)
+    faqs = ActivityFAQSerializer(many=True,read_only=True)
+    enquiries = ActivityEnquirySerializer(many=True,read_only=True)
+    testimonials = ActivityTestimonialSerializer(many=True,read_only=True)
+    prices = ActivityPricingSerializer(many=True,read_only=True)
+    related_activities = ActivitySmallSerializer(many=True,read_only=True)
+    related_blogs = PostSmallSerializer(many=True,read_only=True)
+    
+    class Meta:
+        model = Activity
+        fields = '__all__'
+        depth = 2
+
 
 
 class ActivitySlugSerializer(serializers.ModelSerializer):
