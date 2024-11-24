@@ -81,6 +81,8 @@ class Activity(models.Model):
     trek_map = models.FileField(blank=True)
     altitude_chart = models.FileField(blank=True)
     additional_info = tinymce_models.HTMLField(blank=True)
+    related_activities = models.ManyToManyField('self',blank=True)
+    related_blogs = models.ManyToManyField('blog.Post',blank=True)
 
     class Meta:
         ordering = ['createdAt']
