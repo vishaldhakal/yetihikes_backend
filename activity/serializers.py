@@ -1,5 +1,6 @@
 from .models import Activity,ActivityTestimonialImage,ActivityPricing,ActivityBooking,ActivityEnquiry,ActivityCategory,ItineraryActivity,ActivityImage,Destination,ActivityRegion,ActivityFAQ,ActivityTestimonial
 from rest_framework import serializers
+from blog.serializers import PostSmallSerializer
 
 class ActivityEnquirySerializer(serializers.ModelSerializer):
     class Meta:
@@ -103,6 +104,13 @@ class ItineraryActivitySerializer(serializers.ModelSerializer):
         model = ItineraryActivity
         fields = '__all__'
 
+class ActivitySmallestSerializer(serializers.ModelSerializer):
+    destination = DestinationSerializerSmall()
+    class Meta:
+        model = Activity
+        fields = ('id','slug', 'activity_title','destination','duration','price','priceSale','trip_grade','max_group_size','best_time')
+        depth = 1
+
 class ActivitySerializer(serializers.ModelSerializer):
     itinerary = ItineraryActivitySerializer(many=True, read_only=True)
     gallery = ActivityImageSerializer(many=True,read_only=True)
@@ -110,11 +118,14 @@ class ActivitySerializer(serializers.ModelSerializer):
     enquiries = ActivityEnquirySerializer(many=True,read_only=True)
     testimonials = ActivityTestimonialSerializer(many=True,read_only=True)
     prices = ActivityPricingSerializer(many=True,read_only=True)
+    realted_activities = ActivitySmallestSerializer(many=True,read_only=True)
+    related_blogs = PostSmallSerializer(many=True,read_only=True)
     
     class Meta:
         model = Activity
         fields = '__all__'
         depth = 2
+
 
 class ActivitySmallSerializer(serializers.ModelSerializer):
     destination = DestinationSerializerSmall()
@@ -124,12 +135,6 @@ class ActivitySmallSerializer(serializers.ModelSerializer):
         fields = ('id','slug', 'activity_title', 'activity_category','enquiries','location','duration','price','coverImg','ratings','popular','best_selling','destination','activity_region','priceSale','youtube_link')
         depth = 1
 
-class ActivitySmallestSerializer(serializers.ModelSerializer):
-    destination = DestinationSerializerSmall()
-    class Meta:
-        model = Activity
-        fields = ('id','slug', 'activity_title','destination','duration','price','priceSale','trip_grade','max_group_size','best_time')
-        depth = 1
 
 class ActivitySlugSerializer(serializers.ModelSerializer):
     class Meta:
