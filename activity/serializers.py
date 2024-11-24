@@ -109,7 +109,6 @@ class ActivitySmallestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
         fields = ('id','slug', 'activity_title','destination','duration','price','priceSale','trip_grade','max_group_size','best_time')
-        depth = 1
 
 class ActivitySerializer(serializers.ModelSerializer):
     itinerary = ItineraryActivitySerializer(many=True, read_only=True)
