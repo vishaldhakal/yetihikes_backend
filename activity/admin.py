@@ -97,13 +97,7 @@ class ActivityAdmin(ModelAdmin):
                 "tour_excludes",
                 "additional_info"
             )
-        })
-        ('Related Information', {
-            "fields": (
-                "related_activities",
-                "related_blogs"
-            )
-        })
+        }),
     )
 
     def formfield_for_dbfield(self, db_field, **kwargs):
