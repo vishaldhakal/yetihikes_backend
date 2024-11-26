@@ -143,5 +143,5 @@ class ActivitySlugSerializer(serializers.ModelSerializer):
 class CuponSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cupon
-        fields = '__all__'
+        exclude = ('activities',)
         depth = 1
