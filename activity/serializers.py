@@ -1,4 +1,4 @@
-from .models import Activity,ActivityTestimonialImage,ActivityPricing,ActivityBooking,ActivityEnquiry,ActivityCategory,ItineraryActivity,ActivityImage,Destination,ActivityRegion,ActivityFAQ,ActivityTestimonial
+from .models import Activity,ActivityTestimonialImage,ActivityPricing,ActivityBooking,ActivityEnquiry,ActivityCategory,ItineraryActivity,ActivityImage,Destination,ActivityRegion,ActivityFAQ,ActivityTestimonial,Cupon
 from rest_framework import serializers
 from blog.serializers import PostSmallSerializer
 
@@ -139,3 +139,9 @@ class ActivitySlugSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
         fields = ('id','slug')
+
+class CuponSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cupon
+        fields = '__all__'
+        depth = 1

@@ -16,7 +16,7 @@ from activity.serializers import ActivityBooking2Serializer
 from datetime import date
 from guide.models import TravelGuide
 from guide.serializers import TravelGuideSmallSerializer
-
+from activity.models import Cupon
 
 
 @api_view(["POST"])
@@ -127,6 +127,17 @@ def BookingSubmission(request):
         no_of_guests = int(request.POST.get("no_of_guests", 0))
         total_price = float(request.POST.get("total_price", 0.0))
         booking_date_str = request.POST.get("booking_date")
+        cupon_code = request.POST.get("cupon_code", "")
+
+        cupon = None
+
+        try:
+            cupon = Cupon.objects.get(code=cupon_code)
+        except:
+            cupon = None
+
+        if cupon:
+            total_price = total_price * (1 - cupon.discount / 100)
 
         # Optional fields
         phone = request.POST.get("phone", "")
@@ -152,6 +163,7 @@ def BookingSubmission(request):
             "no_of_guests": no_of_guests,
             "booking_date": booking_date_str,
             "activity": act.activity_title,
+            "cupon_code": cupon_code,
             "slug": request.POST["slug"],
         }
 
@@ -174,17 +186,28 @@ def BookingSubmission(request):
         msg.send()
 
         # Create booking with required fields
-        new_booking = ActivityBooking.objects.create(
-            activity=act,
-            name=name,
-            address=address,
-            email=emaill,
-            no_of_guests=no_of_guests,
-            total_price=total_price,
-            booking_date=booking_date
-        )
+        if cupon:
+            new_booking = ActivityBooking.objects.create(
+                activity=act,
+                name=name,
+                address=address,
+                email=emaill,
+                no_of_guests=no_of_guests,
+                total_price=total_price,
+                booking_date=booking_date,
+                cupon_code=cupon
+            )
+        else:
+            new_booking = ActivityBooking.objects.create(
+                activity=act,
+                name=name,
+                address=address,
+                email=emaill,
+                no_of_guests=no_of_guests,
+                total_price=total_price,
+                booking_date=booking_date,
+            )
 
-        # Set optional fields only if they exist in request.POST
         optional_fields = {
             'is_private': private_booking == "True" if "private_booking" in request.POST else None,
             'phone': phone if phone else None,

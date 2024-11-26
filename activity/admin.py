@@ -3,7 +3,7 @@ from django.db import models
 from .models import (
     ActivityTestimonial, ActivityTestimonialImage, ActivityCategory, 
     ActivityBooking, ActivityEnquiry, ActivityPricing, Activity, 
-    ItineraryActivity, ActivityImage, Destination, ActivityRegion, ActivityFAQ
+    ItineraryActivity, ActivityImage, Destination, ActivityRegion, ActivityFAQ, Cupon
 )
 from unfold.admin import ModelAdmin, TabularInline, StackedInline
 from tinymce.widgets import TinyMCE
@@ -297,3 +297,4 @@ admin.site.register(ActivityRegion, ActivityRegionAdmin)
 admin.site.register(ActivityEnquiry, ModelAdmin)
 admin.site.register(ActivityTestimonial, ActivityTestimonialAdmin)
 admin.site.register(ActivityBooking, ActivityBookingAdmin)
+admin.site.register(Cupon, ModelAdmin)

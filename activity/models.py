@@ -1,8 +1,5 @@
 from django.db import models
 from tinymce import models as tinymce_models
-from django.utils.text import slugify
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 
 class Destination(models.Model):
      meta_title = models.CharField(max_length=200,blank=True)
@@ -128,30 +125,6 @@ class ActivityEnquiry(models.Model):
     def __str__(self):
         return self.name
 
-class ActivityBooking(models.Model):
-    activity = models.ForeignKey(Activity,on_delete=models.CASCADE,related_name='bookings')
-    name = models.CharField(max_length=400)
-    address = models.CharField(max_length=400)
-    email = models.CharField(max_length=400)
-    phone = models.CharField(max_length=400,blank=True)
-    message = models.TextField(blank=True)
-    no_of_guests = models.IntegerField()
-    total_price = models.FloatField()
-    is_private = models.BooleanField(default=False)
-    is_verified = models.BooleanField(default=False)
-    booking_date = models.DateTimeField()
-    arrival_date = models.DateTimeField(null=True)
-    departure_date = models.DateTimeField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    emergency_contact_name = models.CharField(max_length=400,blank=True)
-    emergency_address = models.CharField(max_length=400,blank=True)
-    emergency_phone = models.CharField(max_length=400,blank=True)
-    emergency_email = models.CharField(max_length=400,blank=True)
-    emergency_relationship = models.CharField(max_length=400,blank=True)
-
-    def __str__(self):
-        return "Booking for " + self.activity.activity_title
 
 class ActivityFAQ(models.Model):
     question = tinymce_models.HTMLField(blank=True)
@@ -197,3 +170,37 @@ class ItineraryActivity(models.Model):
           return self.title
 
 
+class Cupon(models.Model):
+    code = models.CharField(max_length=100)
+    discount = models.FloatField()
+    active = models.BooleanField(default=True)
+    activities = models.ManyToManyField(Activity,blank=True)
+
+    def __str__(self) -> str:
+          return self.code
+    
+class ActivityBooking(models.Model):
+    activity = models.ForeignKey(Activity,on_delete=models.CASCADE,related_name='bookings')
+    name = models.CharField(max_length=400)
+    address = models.CharField(max_length=400)
+    email = models.CharField(max_length=400)
+    phone = models.CharField(max_length=400,blank=True)
+    message = models.TextField(blank=True)
+    no_of_guests = models.IntegerField()
+    total_price = models.FloatField()
+    cupon_code = models.ForeignKey(Cupon,on_delete=models.DO_NOTHING,blank=True,null=True)
+    is_private = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    booking_date = models.DateTimeField()
+    arrival_date = models.DateTimeField(null=True)
+    departure_date = models.DateTimeField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    emergency_contact_name = models.CharField(max_length=400,blank=True)
+    emergency_address = models.CharField(max_length=400,blank=True)
+    emergency_phone = models.CharField(max_length=400,blank=True)
+    emergency_email = models.CharField(max_length=400,blank=True)
+    emergency_relationship = models.CharField(max_length=400,blank=True)
+
+    def __str__(self):
+        return "Booking for " + self.activity.activity_title
