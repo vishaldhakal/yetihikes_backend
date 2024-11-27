@@ -175,6 +175,8 @@ class Cupon(models.Model):
     discount = models.FloatField()
     active = models.BooleanField(default=True)
     activities = models.ManyToManyField(Activity,blank=True)
+    valid_from = models.DateField(null=True,blank=True)
+    valid_to = models.DateField(null=True,blank=True)
 
     def __str__(self) -> str:
           return self.code

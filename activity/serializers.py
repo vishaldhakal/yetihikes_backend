@@ -145,3 +145,10 @@ class CuponSerializer(serializers.ModelSerializer):
         model = Cupon
         exclude = ('activities',)
         depth = 1
+
+class CuponSerializer2(serializers.ModelSerializer):
+    activities = ActivitySmallestSer(many=True,read_only=True)
+    class Meta:
+        model = Cupon
+        fields = '__all__'
+        depth = 1

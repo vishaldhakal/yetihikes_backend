@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Activity,ActivityCategory,ActivityBooking,Destination,ActivityTestimonial,ItineraryActivity,ActivityImage,ActivityRegion,Cupon
-from .serializers import ActivityCategorySlugSerializer,ActivityTestimonialSerializer,ActivityBookingSerializer,ActivityRegionSlugSerializer,DestinationSerializerSmall,ActivitySlugSerializer,DestinationSerializer,ActivityCategorySerializer,ActivitySerializer,ItineraryActivitySerializer,ActivityImageSerializer,ActivitySmallSerializer,ActivityRegionSerializer,ActivityRegionSmallSerializer,CuponSerializer
+from .serializers import ActivityCategorySlugSerializer,ActivityTestimonialSerializer,ActivityBookingSerializer,ActivityRegionSlugSerializer,DestinationSerializerSmall,ActivitySlugSerializer,DestinationSerializer,ActivityCategorySerializer,ActivitySerializer,ItineraryActivitySerializer,ActivityImageSerializer,ActivitySmallSerializer,ActivityRegionSerializer,ActivityRegionSmallSerializer,CuponSerializer,CuponSerializer2
 import json
 from django.core import serializers
 from django.db.models import DateField
@@ -281,6 +281,6 @@ def activity_images_collection(request):
 @api_view(['GET'])
 def cupons_collection(request):
     if request.method == 'GET':
-        cupons = Cupon.objects.all()
-        serializer_cupons = CuponSerializer(cupons, many=True)
+        cupons = Cupon.objects.filter(active=True,valid_from__lte=timezone.now().date(),valid_to__gte=timezone.now().date())
+        serializer_cupons = CuponSerializer2(cupons, many=True)
         return Response(serializer_cupons.data)
