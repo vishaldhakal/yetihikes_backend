@@ -97,12 +97,19 @@ class Activity(models.Model):
           return self.activity_title + strrr
 
 class ActivityTestimonial(models.Model):
+    SOURCE_CHOICES = (
+    ("Trip Advisor", "Trip Advisor"),
+    ("Trust Pilot", "Trust Pilot"),
+    ("Google", "Google"),
+    ("Others", "Others"),
+    )
     activity = models.ForeignKey(Activity,on_delete=models.CASCADE,related_name='testimonials')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=200,blank=True)
     title = models.CharField(max_length=500,blank=True)
     review = tinymce_models.HTMLField(blank=True)
+    source = models.CharField(max_length=500,blank=True,choices=SOURCE_CHOICES,default="Others")
     rating = models.FloatField(default=5)
 
     def __str__(self) -> str:
