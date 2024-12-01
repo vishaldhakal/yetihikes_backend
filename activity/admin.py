@@ -271,7 +271,9 @@ class ActivityBookingAdmin(ModelAdmin):
                 "address",
                 ("no_of_guests", "total_price"),
                 ("is_private", "is_verified"),
-                ("booking_date", "arrival_date", "departure_date"),
+                "booking_date", 
+                "departure_date",
+                "arrival_date",
                 "message"
             )
         }),
