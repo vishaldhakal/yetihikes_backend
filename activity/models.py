@@ -49,6 +49,7 @@ class ActivityRegion(models.Model):
 class Activity(models.Model):
     meta_title = models.CharField(max_length=200,blank=True)
     meta_description = models.TextField(blank=True)
+    meta_keywords = models.TextField(blank=True)
     activity_category = models.ManyToManyField(ActivityCategory)
     activity_region = models.ForeignKey(ActivityRegion,on_delete=models.DO_NOTHING)
     destination = models.ForeignKey(Destination,on_delete=models.DO_NOTHING)

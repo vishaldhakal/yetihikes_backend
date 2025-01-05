@@ -45,6 +45,7 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.DO_NOTHING)
     meta_title = models.CharField(max_length=200)
     meta_description = models.TextField()
+    meta_keywords = models.TextField(blank=True)
 
     class Meta:
         ordering = ['-created_at']
