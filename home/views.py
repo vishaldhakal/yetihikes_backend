@@ -186,7 +186,8 @@ def BookingSubmission(request):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-        departure_date = DepartureDate.objects.filter(activity=act,date=booking_date)
+        booking_date_only = booking_date.date()
+        departure_date = DepartureDate.objects.filter(activity=act, date=booking_date_only)
         for dd in departure_date:
             dd.booked_seats += no_of_guests
             dd.save()
