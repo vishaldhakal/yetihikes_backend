@@ -1,4 +1,4 @@
-from .models import Activity,ActivityTestimonialImage,ActivityPricing,ActivityBooking,ActivityEnquiry,ActivityCategory,ItineraryActivity,ActivityImage,Destination,ActivityRegion,ActivityFAQ,ActivityTestimonial,Cupon
+from .models import Activity,ActivityTestimonialImage,ActivityPricing,ActivityBooking,ActivityEnquiry,ActivityCategory,ItineraryActivity,ActivityImage,Destination,ActivityRegion,ActivityFAQ,ActivityTestimonial,Cupon,DepartureDate
 from rest_framework import serializers
 from blog.serializers import PostSmallSerializer
 
@@ -127,6 +127,11 @@ class ActivitySerializer(serializers.ModelSerializer):
     prices = ActivityPricingSerializer(many=True,read_only=True)
     related_activities = ActivitySmallSerializer(many=True,read_only=True)
     related_blogs = PostSmallSerializer(many=True,read_only=True)
+    departure_dates = serializers.SerializerMethodField()
+    
+    def get_departure_dates(self,obj):
+        departure_dates = DepartureDate.objects.filter(activity=obj)
+        return DepartureDateSerializer2(departure_dates,many=True).data
     
     class Meta:
         model = Activity
@@ -151,4 +156,17 @@ class CuponSerializer2(serializers.ModelSerializer):
     class Meta:
         model = Cupon
         fields = '__all__'
+        depth = 1
+
+class DepartureDateSerializer(serializers.ModelSerializer):
+    activity = ActivitySmallestSer(read_only=True)
+    class Meta:
+        model = DepartureDate
+        fields = '__all__'
+        depth = 1
+
+class DepartureDateSerializer2(serializers.ModelSerializer):
+    class Meta:
+        model = DepartureDate
+        fields = ('id','date','booked_seats')
         depth = 1

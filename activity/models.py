@@ -214,3 +214,15 @@ class ActivityBooking(models.Model):
 
     def __str__(self):
         return "Booking for " + self.activity.activity_title
+
+
+class DepartureDate(models.Model):
+    activity = models.ForeignKey(Activity,on_delete=models.CASCADE,related_name='departure_dates')
+    date = models.DateField()
+    booked_seats = models.IntegerField()
+
+    def __str__(self):
+        return self.activity.activity_title + " - " + self.date.strftime("%d-%m-%Y")
+
+    class Meta:
+        ordering = ['date']

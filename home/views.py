@@ -6,17 +6,18 @@ from .models import FAQ,FAQCategory,LegalDocument,FeaturedTour,TeamMember,Testim
 from .serializers import FAQSerializer,LegalDocumentSerializer,FeaturedTourSerializer,FAQCategorySerializer,TeamMemberSlugSerializer,TestimonialSerializer,TeamMemberSerializer,AffiliationsSerializer,PartnersSerializer,SiteConfigurationSerializer,DestinationNavDropdownSerializer, OtherActivitiesNavDropdownSerializer, ClimbingNavDropdownSerializer, TreekingNavDropdownSerializer
 from blog.models import Post
 from blog.serializers import PostSmallSerializer
-from activity.models import ActivityCategory,Activity,ActivityEnquiry,ActivityBooking
+from activity.models import ActivityCategory,Activity,ActivityEnquiry,ActivityBooking,DepartureDate
 from activity.serializers import ActivityCategorySerializer,ActivitySmallSerializer,ActivityCategory2Serializer
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from datetime import datetime
-from activity.serializers import ActivityBooking2Serializer
+from activity.serializers import ActivityBooking2Serializer,DepartureDateSerializer
 from datetime import date
 from guide.models import TravelGuide
 from guide.serializers import TravelGuideSmallSerializer
 from activity.models import Cupon
+
 
 
 @api_view(["POST"])
@@ -305,21 +306,15 @@ def landing_page(request):
 
         posts = Post.objects.all()[:5]
         posts_serializer = PostSmallSerializer(posts,many=True)
-        
-        bookings = ActivityBooking.objects.filter(booking_date__gte=today).order_by('-booking_date')[:10]
-        bookings_serializer = ActivityBooking2Serializer(bookings,many=True)
 
         activities = FeaturedTour.objects.get()
         serializer_activities = FeaturedTourSerializer(activities)
 
         activity_category = ActivityCategory.objects.all()
         serializer_activity_category = ActivityCategory2Serializer(activity_category, many=True)
-        
-        affiliations = Affiliations.objects.all()
-        serializer_affiliations = AffiliationsSerializer(affiliations, many=True)
-        
-        partners = Partners.objects.all()
-        serializer_partners = PartnersSerializer(partners, many=True)
+
+        departure_dates = DepartureDate.objects.all()
+        serializer_departure_dates = DepartureDateSerializer(departure_dates, many=True)
         
         return Response({
           "hero_content":hero_content_serializer.data,
@@ -332,9 +327,7 @@ def landing_page(request):
           "activity_categories":serializer_activity_category.data,
           "team_members":teammembers_serializer.data,
           "testimonials":testimonial_serializer.data,
-          "affiliations":serializer_affiliations.data,
-          "partners":serializer_partners.data,
-          "bookings":bookings_serializer.data,
+          "departure_dates":serializer_departure_dates.data,
         })
 
 @api_view(['GET'])
