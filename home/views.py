@@ -148,9 +148,9 @@ def BookingSubmission(request):
         private_booking = request.POST.get("private_booking", "False")
 
         # Parse dates
-        booking_date = datetime.strptime(booking_date_str, '%Y-%m-%dT%H:%M:%S.%fZ')
-        arrival_date = datetime.strptime(arrival_date_str, '%Y-%m-%dT%H:%M:%S.%fZ') if arrival_date_str else None
-        departure_date = datetime.strptime(departure_date_str, '%Y-%m-%dT%H:%M:%S.%fZ') if departure_date_str else None
+        booking_date = datetime.strptime(booking_date_str, '%Y-%m-%d')
+        arrival_date = datetime.strptime(arrival_date_str, '%Y-%m-%d') if arrival_date_str else None
+        departure_date = datetime.strptime(departure_date_str, '%Y-%m-%d') if departure_date_str else None
 
         act = Activity.objects.get(slug=request.POST["slug"])
 
