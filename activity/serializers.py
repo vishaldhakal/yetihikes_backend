@@ -24,7 +24,7 @@ class ActivityTestimonialSerializer(serializers.ModelSerializer):
 class ActivitySmallestSer(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields = ('activity_title','priceSale','slug','max_group_size',)
+        fields = ('activity_title','priceSale','slug',)
         depth = 1
         
 class ActivityBooking2Serializer(serializers.ModelSerializer):
@@ -168,5 +168,5 @@ class DepartureDateSerializer(serializers.ModelSerializer):
 class DepartureDateSerializer2(serializers.ModelSerializer):
     class Meta:
         model = DepartureDate
-        fields = ('id','date','booked_seats')
+        fields = ('id','date','booked_seats','max_seats')
         depth = 1

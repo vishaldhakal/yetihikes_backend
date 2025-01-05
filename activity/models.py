@@ -220,6 +220,7 @@ class DepartureDate(models.Model):
     activity = models.ForeignKey(Activity,on_delete=models.CASCADE,related_name='departure_dates')
     date = models.DateField()
     booked_seats = models.IntegerField(default=0)
+    max_seats = models.IntegerField(default=0)
 
     def __str__(self):
         return self.activity.activity_title + " - " + self.date.strftime("%d-%m-%Y")
