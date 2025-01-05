@@ -214,6 +214,12 @@ def BookingSubmission(request):
                 total_price=total_price,
                 booking_date=booking_date,
             )
+            try:
+                departure_date = DepartureDate.objects.get(activity=act,date=booking_date.date())
+                departure_date.booked_seats += no_of_guests
+                departure_date.save()
+            except:
+                pass
 
         optional_fields = {
             'is_private': private_booking == "True" if "private_booking" in request.POST else None,
