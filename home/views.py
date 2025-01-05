@@ -186,6 +186,13 @@ def BookingSubmission(request):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
+        departure_date = DepartureDate.objects.filter(activity=act,date=booking_date.date())
+        if departure_date:
+            departure_date.booked_seats += no_of_guests
+            departure_date.save()
+        else:
+            departure_date = DepartureDate.objects.create(activity=act,date=booking_date.date(),booked_seats=no_of_guests)
+            departure_date.save()
         # Create booking with required fields
         if cupon:
             new_booking = ActivityBooking.objects.create(
@@ -198,12 +205,6 @@ def BookingSubmission(request):
                 booking_date=booking_date,
                 cupon_code=cupon
             )
-            try:
-                departure_date = DepartureDate.objects.get(activity=act,date=booking_date.date())
-                departure_date.booked_seats += no_of_guests
-                departure_date.save()
-            except:
-                pass
         else:
             new_booking = ActivityBooking.objects.create(
                 activity=act,
@@ -214,12 +215,7 @@ def BookingSubmission(request):
                 total_price=total_price,
                 booking_date=booking_date,
             )
-            try:
-                departure_date = DepartureDate.objects.get(activity=act,date=booking_date.date())
-                departure_date.booked_seats += no_of_guests
-                departure_date.save()
-            except:
-                pass
+            
 
         optional_fields = {
             'is_private': private_booking == "True" if "private_booking" in request.POST else None,
