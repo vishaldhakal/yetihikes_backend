@@ -147,11 +147,7 @@ def BookingSubmission(request):
         departure_date_str = request.POST.get("departure_date", "")
         private_booking = request.POST.get("private_booking", "False")
 
-        # Parse dates
-        booking_date = datetime.strptime(booking_date_str, '%Y-%m-%d')
-        arrival_date = datetime.strptime(arrival_date_str, '%Y-%m-%d') if arrival_date_str else None
-        departure_date = datetime.strptime(departure_date_str, '%Y-%m-%d') if departure_date_str else None
-
+        
         act = Activity.objects.get(slug=request.POST["slug"])
 
         # Create context with required fields
@@ -195,11 +191,11 @@ def BookingSubmission(request):
                 email=emaill,
                 no_of_guests=no_of_guests,
                 total_price=total_price,
-                booking_date=booking_date,
+                booking_date=booking_date_str,
                 cupon_code=cupon
             )
             try:
-                departure_date = DepartureDate.objects.get(activity=act,date=booking_date)
+                departure_date = DepartureDate.objects.get(activity=act,date=booking_date_str)
                 departure_date.booked_seats += no_of_guests
                 departure_date.save()
             except:
@@ -212,10 +208,10 @@ def BookingSubmission(request):
                 email=emaill,
                 no_of_guests=no_of_guests,
                 total_price=total_price,
-                booking_date=booking_date,
+                booking_date=booking_date_str,
             )
             try:
-                departure_date = DepartureDate.objects.get(activity=act,date=booking_date)
+                departure_date = DepartureDate.objects.get(activity=act,date=booking_date_str)
                 departure_date.booked_seats += no_of_guests
                 departure_date.save()
             except:
@@ -225,8 +221,8 @@ def BookingSubmission(request):
             'is_private': private_booking == "True" if "private_booking" in request.POST else None,
             'phone': phone if phone else None,
             'message': message if message else None,
-            'arrival_date': arrival_date if arrival_date else None,
-            'departure_date': departure_date if departure_date else None,
+            'arrival_date': arrival_date_str if arrival_date_str else None,
+            'departure_date': departure_date_str if departure_date_str else None,
             'emergency_contact_name': emergency_fields['emergency_contact_name'] if emergency_fields['emergency_contact_name'] else None,
             'emergency_address': emergency_fields['emergency_address'] if emergency_fields['emergency_address'] else None,
             'emergency_phone': emergency_fields['emergency_phone'] if emergency_fields['emergency_phone'] else None,
