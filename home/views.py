@@ -186,11 +186,11 @@ def BookingSubmission(request):
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
-        departure_date = DepartureDate.objects.filter(activity=act,date=booking_date.date())
+        departure_date = DepartureDate.objects.filter(activity=act,date=booking_date)
         for dd in departure_date:
             dd.booked_seats += no_of_guests
             dd.save()
-            
+
         # Create booking with required fields
         if cupon:
             new_booking = ActivityBooking.objects.create(
