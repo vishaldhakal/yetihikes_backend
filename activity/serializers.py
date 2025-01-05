@@ -24,7 +24,7 @@ class ActivityTestimonialSerializer(serializers.ModelSerializer):
 class ActivitySmallestSer(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields = ('activity_title','priceSale','slug',)
+        fields = ('activity_title','priceSale','slug','max_group_size',)
         depth = 1
         
 class ActivityBooking2Serializer(serializers.ModelSerializer):
