@@ -199,7 +199,7 @@ def BookingSubmission(request):
                 cupon_code=cupon
             )
             try:
-                departure_date = DepartureDate.objects.get(activity=act,date=booking_date.date())
+                departure_date = DepartureDate.objects.get(activity=act,date=booking_date)
                 departure_date.booked_seats += no_of_guests
                 departure_date.save()
             except:
@@ -215,7 +215,7 @@ def BookingSubmission(request):
                 booking_date=booking_date,
             )
             try:
-                departure_date = DepartureDate.objects.get(activity=act,date=booking_date.date())
+                departure_date = DepartureDate.objects.get(activity=act,date=booking_date)
                 departure_date.booked_seats += no_of_guests
                 departure_date.save()
             except:
