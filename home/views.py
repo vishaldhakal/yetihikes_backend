@@ -15,7 +15,7 @@ from datetime import datetime
 from activity.serializers import ActivityBooking2Serializer,DepartureDateSerializer
 from datetime import date
 from guide.models import TravelGuide
-from guide.serializers import TravelGuideSmallSerializer
+from guide.serializers import TravelGuideSmallSerializer,NavBarTravelGuideSerializer
 from activity.models import Cupon
 
 
@@ -287,7 +287,7 @@ def navbar(request):
         trek_nav_serializer = TreekingNavDropdownSerializer(trek_nav)
 
         posts = TravelGuide.objects.all()
-        serializer = TravelGuideSmallSerializer(posts, many=True)
+        serializer = NavBarTravelGuideSerializer(posts, many=True)
         
         return Response({
           "destination_nav":destination_nav_serializer.data,

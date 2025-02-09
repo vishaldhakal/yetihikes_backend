@@ -37,6 +37,11 @@ class TravelGuideSmallSerializer(serializers.ModelSerializer):
         depth = 1
         ordering = ['-created_at']
 
+class NavBarTravelGuideSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TravelGuide
+        fields = ('id','title','slug')
+
 class TravelGuideSlugSerializer(serializers.ModelSerializer):
     class Meta:
         model = TravelGuide

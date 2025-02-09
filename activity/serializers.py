@@ -43,12 +43,20 @@ class DestinationSerializer(serializers.ModelSerializer):
         model = Destination
         fields = '__all__'
         depth = 2
+class NavBarDestinationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Destination
+        fields = ('id','name','thumnail_image','thumnail_image_alt_description')
 
 class ActivityRegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityRegion
         fields = '__all__'
         depth = 1
+class NavBarActivityRegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityRegion
+        fields = ('id','title','image','image_alt_description','slug')
 
 class ActivityRegionSmallSerializer(serializers.ModelSerializer):
     class Meta:
@@ -78,6 +86,10 @@ class ActivityCategorySerializer(serializers.ModelSerializer):
         model = ActivityCategory
         fields = '__all__'
         depth = 2
+class NavBarActivityCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityCategory
+        fields = ('id','title','image','image_alt_description')
 
 class ActivityCategorySlugSerializer(serializers.ModelSerializer):
     class Meta:
@@ -111,12 +123,16 @@ class ActivitySmallestSerializer(serializers.ModelSerializer):
         fields = ('id','slug', 'activity_title','destination','duration','price','priceSale','trip_grade','max_group_size','best_time')
 
 class ActivitySmallSerializer(serializers.ModelSerializer):
-    destination = DestinationSerializerSmall()
-    enquiries = ActivityEnquirySerializer(many=True,read_only=True)
+
     class Meta:
         model = Activity
-        fields = ('id','slug', 'activity_title', 'activity_category','enquiries','location','duration','price','coverImg','ratings','popular','best_selling','destination','activity_region','priceSale','youtube_link')
-        depth = 1
+        fields = ('id','slug', 'activity_title','coverImg')
+
+
+class NavBarActivitySmallSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Activity
+        fields=('id','activity_title','slug')
         
 class ActivitySerializer(serializers.ModelSerializer):
     itinerary = ItineraryActivitySerializer(many=True, read_only=True)
