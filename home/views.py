@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import FAQ,FAQCategory,LegalDocument,FeaturedTour,TeamMember,Testimonial,SiteConfiguration,Affiliations,Partners,DestinationNavDropdown, OtherActivitiesNavDropdown, InnerDropdown, ClimbingNavDropdown, TreekingNavDropdown,NewsletterSubscription
-from .serializers import FAQSerializer,LegalDocumentSerializer,FeaturedTourSerializer,FAQCategorySerializer,TeamMemberSlugSerializer,TestimonialSerializer,TeamMemberSerializer,AffiliationsSerializer,PartnersSerializer,SiteConfigurationSerializer,DestinationNavDropdownSerializer, OtherActivitiesNavDropdownSerializer, ClimbingNavDropdownSerializer, TreekingNavDropdownSerializer,LandingTeamMemberSerializer
+from .serializers import FAQSerializer,LegalDocumentSerializer,FeaturedTourSerializer,FAQCategorySerializer,TeamMemberSlugSerializer,TestimonialSerializer,TeamMemberSerializer,AffiliationsSerializer,PartnersSerializer,SiteConfigurationSerializer,DestinationNavDropdownSerializer, OtherActivitiesNavDropdownSerializer, ClimbingNavDropdownSerializer, TreekingNavDropdownSerializer,LandingTeamMemberSerializer,LandingFeaturedTourSerializer
 from blog.models import Post
 from blog.serializers import PostSmallSerializer,LandingPagePostSerializer
 from activity.models import ActivityCategory,Activity,ActivityEnquiry,ActivityBooking,DepartureDate
@@ -313,7 +313,7 @@ def landing_page(request):
         posts_serializer = LandingPagePostSerializer(posts,many=True)
 
         activities = FeaturedTour.objects.get()
-        serializer_activities = FeaturedTourSerializer(activities)
+        serializer_activities = LandingFeaturedTourSerializer(activities)
 
         activity_category = ActivityCategory.objects.all()[:4]
         serializer_activity_category = ActivityCategory2Serializer(activity_category, many=True)
@@ -326,7 +326,6 @@ def landing_page(request):
           "featured_activities":serializer_activities.data["featured_tours"],
           "popular_activities":serializer_activities.data["popular_tours"],
           "best_selling_activities":serializer_activities.data["best_selling_tours"],
-          "favourite_activities":serializer_activities.data["favourite_tours"],
           "banner_activity":serializer_activities.data["banner_tour"],
           "activity_categories":serializer_activity_category.data,
           "team_members":teammembers_serializer.data,

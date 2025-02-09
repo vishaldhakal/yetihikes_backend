@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import TeamMember,FeaturedTour,Testimonial,SiteConfiguration,Affiliations,Partners,TreekingNavDropdown,DestinationNavDropdown,OtherActivitiesNavDropdown,ClimbingNavDropdown,InnerDropdown,FAQ,FAQCategory,LegalDocument,GuideDropdown
-from activity.serializers import NavBarActivitySmallSerializer,ActivitySmallSerializer,NavBarActivityRegionSerializer,DestinationSerializer,NavBarDestinationSerializer,NavBarActivityCategorySerializer
+from activity.serializers import NavBarActivitySmallSerializer,ActivitySmallSerializer,NavBarActivityRegionSerializer,DestinationSerializer,NavBarDestinationSerializer,NavBarActivityCategorySerializer,LandingActivitySmallSerializer,LandingBannerActivitySmallSerializer
 from guide.serializers import TravelGuideSerializer
 
 
@@ -24,6 +24,14 @@ class FeaturedTourSerializer(serializers.ModelSerializer):
         model = FeaturedTour
         fields = '__all__'
 
+class LandingFeaturedTourSerializer(serializers.ModelSerializer):
+    featured_tours = LandingActivitySmallSerializer(many=True)
+    popular_tours = LandingActivitySmallSerializer(many=True)
+    best_selling_tours = LandingActivitySmallSerializer(many=True)
+    banner_tour = LandingBannerActivitySmallSerializer(many=True)
+    class Meta:
+        model = FeaturedTour
+        fields = '__all__'
 
 class FAQSerializer(serializers.ModelSerializer):
     category = FAQCategorySerializer(read_only=True)
