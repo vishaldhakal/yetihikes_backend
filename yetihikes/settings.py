@@ -92,15 +92,15 @@ WSGI_APPLICATION = 'yetihikes.wsgi.application'
 DATA_UPLOAD_MAX_MEMORY_SIZE = None
 
 
-DATABASES = {
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+} """
 
 
-""" DATABASES = {
+DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "yetihikes",
@@ -109,7 +109,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "",
     }
-} """
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
