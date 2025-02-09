@@ -141,7 +141,7 @@ def activities_slug(request):
 def activities_search(request):
     if request.method == 'GET':
         activities = Activity.objects.all()
-        serializer_activities = ActivitySmallSerializer(activities, many=True)
+        serializer_activities = LandingActivitySmallSerializer(activities, many=True)
         return Response(serializer_activities.data)
 
 @api_view(['GET'])
