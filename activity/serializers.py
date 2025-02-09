@@ -133,12 +133,12 @@ class ActivitySmallSerializer(serializers.ModelSerializer):
 class LandingActivitySmallSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
-        fields=('id','slug','activity_title','location','duration','price','heroImg','priceSale','ratings')
+        fields=('id','slug','activity_title','location','duration','price','heroImg','coverImg','priceSale','ratings')
 
 class LandingBannerActivitySmallSerializer(serializers.ModelSerializer):
         class Meta:
             model = Activity
-            fields=('id','slug','activity_title','location','duration','price','heroImg','priceSale','ratings','activity_region')
+            fields=('id','slug','activity_title','location','duration','price','heroImg','coverImg','priceSale','ratings','activity_region')
             depth = 1
 
 class navBarActivitySmallSerializer(serializers.ModelSerializer):
