@@ -11,15 +11,10 @@ from bs4 import BeautifulSoup
 def post_list(request):
     if request.method == 'GET':
         posts = Post.objects.all()
-        tags = Tag.objects.all()
-        categories = Category.objects.all()
         serializer = LandingPagePostSerializer(posts, many=True)
-        tag_serializer = TagSerializer(tags, many=True)
-        categories_serializer = CategorySerializer(categories, many=True)
         return Response({
             "posts":serializer.data,
-            "tags":tag_serializer.data,
-            "categories":categories_serializer.data,
+
         })
 
 @api_view(['GET'])
