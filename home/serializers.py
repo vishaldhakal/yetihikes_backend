@@ -95,6 +95,11 @@ class TeamMemberSerializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 2
 
+class LandingTeamMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TeamMember
+        fields = ('id','name','role','photo','email','facebook','instagram','linkedin','twitter')
+
 class TeamMemberSlugSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamMember
@@ -103,9 +108,7 @@ class TeamMemberSlugSerializer(serializers.ModelSerializer):
 class TestimonialSerializer(serializers.ModelSerializer):
     class Meta:
         model = Testimonial
-        fields = '__all__'
-        depth = 2
-
+        fields = ('id','name','role','avatar','title','source','review','rating')
 
 class GuideDropdownSerializer(serializers.ModelSerializer):
 

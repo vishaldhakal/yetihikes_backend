@@ -3,9 +3,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import FAQ,FAQCategory,LegalDocument,FeaturedTour,TeamMember,Testimonial,SiteConfiguration,Affiliations,Partners,DestinationNavDropdown, OtherActivitiesNavDropdown, InnerDropdown, ClimbingNavDropdown, TreekingNavDropdown,NewsletterSubscription
-from .serializers import FAQSerializer,LegalDocumentSerializer,FeaturedTourSerializer,FAQCategorySerializer,TeamMemberSlugSerializer,TestimonialSerializer,TeamMemberSerializer,AffiliationsSerializer,PartnersSerializer,SiteConfigurationSerializer,DestinationNavDropdownSerializer, OtherActivitiesNavDropdownSerializer, ClimbingNavDropdownSerializer, TreekingNavDropdownSerializer
+from .serializers import FAQSerializer,LegalDocumentSerializer,FeaturedTourSerializer,FAQCategorySerializer,TeamMemberSlugSerializer,TestimonialSerializer,TeamMemberSerializer,AffiliationsSerializer,PartnersSerializer,SiteConfigurationSerializer,DestinationNavDropdownSerializer, OtherActivitiesNavDropdownSerializer, ClimbingNavDropdownSerializer, TreekingNavDropdownSerializer,LandingTeamMemberSerializer
 from blog.models import Post
-from blog.serializers import PostSmallSerializer
+from blog.serializers import PostSmallSerializer,LandingPagePostSerializer
 from activity.models import ActivityCategory,Activity,ActivityEnquiry,ActivityBooking,DepartureDate
 from activity.serializers import ActivityCategorySerializer,ActivitySmallSerializer,ActivityCategory2Serializer
 from django.core.mail import send_mail, EmailMultiAlternatives
@@ -304,13 +304,13 @@ def landing_page(request):
         today = date.today()
 
         teammembers = TeamMember.objects.all()
-        teammembers_serializer = TeamMemberSerializer(teammembers,many=True)
+        teammembers_serializer = LandingTeamMemberSerializer(teammembers,many=True)
 
         testimonial = Testimonial.objects.all()
         testimonial_serializer = TestimonialSerializer(testimonial,many=True)
         
         posts = Post.objects.all()[:5]
-        posts_serializer = PostSmallSerializer(posts,many=True)
+        posts_serializer = LandingPagePostSerializer(posts,many=True)
 
         activities = FeaturedTour.objects.get()
         serializer_activities = FeaturedTourSerializer(activities)
@@ -379,7 +379,7 @@ def teams_id(request):
 def teams(request):
     if request.method == 'GET':
         teammembers = TeamMember.objects.all()
-        teammembers_serializer = TeamMemberSerializer(teammembers,many=True)
+        teammembers_serializer = LandingTeamMemberSerializer(teammembers,many=True)
         
         return Response({
           "team_members":teammembers_serializer.data,
