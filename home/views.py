@@ -12,7 +12,7 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from datetime import datetime
-from activity.serializers import ActivityBooking2Serializer,DepartureDateSerializer
+from activity.serializers import ActivityBooking2Serializer,DepartureDateSerializer,navBarActivitySmallSerializer
 from datetime import date
 from guide.models import TravelGuide
 from guide.serializers import TravelGuideSmallSerializer,NavBarTravelGuideSerializer
@@ -281,7 +281,7 @@ def navbar(request):
         
         acy = ActivityCategory.objects.get(title="Peak Climbing")
         climb_nav = Activity.objects.filter(activity_category=acy)
-        climb_nav_serializer = ActivitySmallSerializer(climb_nav,many=True)
+        climb_nav_serializer = navBarActivitySmallSerializer(climb_nav,many=True)
 
         trek_nav = TreekingNavDropdown.objects.get()
         trek_nav_serializer = TreekingNavDropdownSerializer(trek_nav)

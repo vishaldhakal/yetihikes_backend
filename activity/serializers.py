@@ -124,10 +124,16 @@ class ActivitySmallestSerializer(serializers.ModelSerializer):
 
 class ActivitySmallSerializer(serializers.ModelSerializer):
 
+    destination = DestinationSerializerSmall()
+    enquiries = ActivityEnquirySerializer(many=True,read_only=True)
+    class Meta:
+        model = Activity
+        fields = ('id','slug', 'activity_title', 'activity_category','enquiries','location','duration','price','coverImg','ratings','popular','best_selling','destination','activity_region','priceSale','youtube_link')
+        depth = 1
+class navBarActivitySmallSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
         fields = ('id','slug', 'activity_title','coverImg')
-
 
 class NavBarActivitySmallSerializer(serializers.ModelSerializer):
     class Meta:
