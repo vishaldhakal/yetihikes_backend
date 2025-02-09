@@ -315,7 +315,7 @@ def landing_page(request):
         activities = FeaturedTour.objects.get()
         serializer_activities = FeaturedTourSerializer(activities)
 
-        activity_category = ActivityCategory.objects.all()
+        activity_category = ActivityCategory.objects.all()[:4]
         serializer_activity_category = ActivityCategory2Serializer(activity_category, many=True)
 
         departure_dates = DepartureDate.objects.all()
