@@ -13,7 +13,7 @@ def post_list(request):
         posts = Post.objects.all()
         tags = Tag.objects.all()
         categories = Category.objects.all()
-        serializer = PostSmallSerializer(posts, many=True)
+        serializer = LandingPagePostSerializer(posts, many=True)
         tag_serializer = TagSerializer(tags, many=True)
         categories_serializer = CategorySerializer(categories, many=True)
         return Response({
