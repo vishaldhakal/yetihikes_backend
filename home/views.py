@@ -309,9 +309,6 @@ def landing_page(request):
         testimonial = Testimonial.objects.all()
         testimonial_serializer = TestimonialSerializer(testimonial,many=True)
         
-        hero_content = SiteConfiguration.objects.get()
-        hero_content_serializer = SiteConfigurationSerializer(hero_content)
-
         posts = Post.objects.all()[:5]
         posts_serializer = PostSmallSerializer(posts,many=True)
 
@@ -325,7 +322,6 @@ def landing_page(request):
         serializer_departure_dates = DepartureDateSerializer(departure_dates, many=True)
         
         return Response({
-          "hero_content":hero_content_serializer.data,
           "recent_posts":posts_serializer.data,
           "featured_activities":serializer_activities.data["featured_tours"],
           "popular_activities":serializer_activities.data["popular_tours"],
@@ -336,6 +332,16 @@ def landing_page(request):
           "team_members":teammembers_serializer.data,
           "testimonials":testimonial_serializer.data,
           "departure_dates":serializer_departure_dates.data,
+        })
+
+@api_view(['GET'])
+def landing_page_hero(request):
+    if request.method == 'GET':
+        hero_content = SiteConfiguration.objects.get()
+        hero_content_serializer = SiteConfigurationSerializer(hero_content)
+
+        return Response({
+          "hero_content":hero_content_serializer.data,
         })
 
 @api_view(['GET'])
