@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Activity,ActivityCategory,ActivityBooking,Destination,ActivityTestimonial,ItineraryActivity,ActivityImage,ActivityRegion,Cupon,DepartureDate
-from .serializers import ActivityCategorySlugSerializer,ActivityTestimonialSerializer,ActivityBookingSerializer,ActivityRegionSlugSerializer,DestinationSerializerSmall,ActivitySlugSerializer,DestinationSerializer,ActivityCategorySerializer,ActivitySerializer,ItineraryActivitySerializer,ActivityImageSerializer,ActivitySmallSerializer,ActivityRegionSerializer,ActivityRegionSmallSerializer,CuponSerializer,CuponSerializer2,DepartureDateSerializer2,DepartureDateSerializer
+from .serializers import ActivityCategorySlugSerializer,ActivityTestimonialSerializer,ActivityBookingSerializer,ActivityRegionSlugSerializer,DestinationSerializerSmall,ActivitySlugSerializer,DestinationSerializer,ActivityCategorySerializer,ActivitySerializer,ItineraryActivitySerializer,ActivityImageSerializer,ActivitySmallSerializer,ActivityRegionSerializer,ActivityRegionSmallSerializer,CuponSerializer,CuponSerializer2,DepartureDateSerializer2,DepartureDateSerializer,LandingActivitySmallSerializer,ActivityDestinationSerializer
 import json
 from django.core import serializers
 from django.db.models import DateField
@@ -186,10 +186,10 @@ def activities_all(request,slug):
             act_category = ActivityCategory.objects.get(slug=act_cat)
             activities = Activity.objects.filter(activity_category=act_category,destination=deatt)
 
-        serializer_activities = ActivitySmallSerializer(activities, many=True)
+        serializer_activities = LandingActivitySmallSerializer(activities, many=True)
 
         activity_category = ActivityCategory.objects.all()
-        serializer_activity_category = ActivityCategorySerializer(activity_category, many=True)
+        serializer_activity_category = ActivityDestinationSerializer(activity_category, many=True)
         
         serializer_destination = DestinationSerializer(deatt)
 
