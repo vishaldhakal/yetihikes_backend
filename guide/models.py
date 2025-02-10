@@ -10,6 +10,7 @@ class TravelGuide(models.Model):
         ('Trekking Info','Trekking Info'),
     )
 
+
     name = models.CharField(max_length=200) 
     category = models.CharField(max_length=200, choices=CATEGORY_CHOICES,default='Nepal Travel Info')
     slug = models.CharField(max_length=300)
@@ -22,6 +23,7 @@ class TravelGuide(models.Model):
     meta_description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    icon=models.FileField(null=True,blank=True)
 
     class Meta:
         ordering = ['-created_at']
