@@ -81,6 +81,15 @@ class Activity(models.Model):
     additional_info = tinymce_models.HTMLField(blank=True)
     related_activities = models.ManyToManyField('self',blank=True)
     related_blogs = models.ManyToManyField('blog.Post',blank=True)
+    
+    difficulty_level = models.CharField(max_length=500,null=True,blank=True)
+    max_altitude = models.CharField(max_length=500,null=True,blank=True)
+    trip_start = models.CharField(max_length=500,null=True,blank=True)
+    trips_end = models.CharField(max_length=500,null=True,blank=True)
+    group_style = models.CharField(max_length=500,null=True,blank=True)
+    best_season = models.CharField(max_length=500,null=True,blank=True)
+    activity_type = models.CharField(max_length=500,null=True,blank=True)
+
 
     class Meta:
         ordering = ['createdAt']
