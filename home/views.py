@@ -6,8 +6,8 @@ from .models import FAQ,FAQCategory,LegalDocument,FeaturedTour,TeamMember,Testim
 from .serializers import FAQSerializer,LegalDocumentSerializer,FeaturedTourSerializer,FAQCategorySerializer,TeamMemberSlugSerializer,TestimonialSerializer,TeamMemberSerializer,AffiliationsSerializer,PartnersSerializer,SiteConfigurationSerializer,DestinationNavDropdownSerializer, OtherActivitiesNavDropdownSerializer, ClimbingNavDropdownSerializer, TreekingNavDropdownSerializer,LandingTeamMemberSerializer,LandingFeaturedTourSerializer
 from blog.models import Post
 from blog.serializers import PostSmallSerializer,LandingPagePostSerializer
-from activity.models import ActivityCategory,Activity,ActivityEnquiry,ActivityBooking,DepartureDate
-from activity.serializers import ActivityCategorySerializer,ActivitySmallSerializer,ActivityCategory2Serializer
+from activity.models import ActivityCategory,Activity,ActivityEnquiry,ActivityBooking,DepartureDate,ActivityRegion
+from activity.serializers import ActivityCategorySerializer,ActivitySmallSerializer,ActivityCategory2Serializer,NavBarActivityRegionSerializer
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -318,6 +318,9 @@ def landing_page(request):
         activity_category = ActivityCategory.objects.all()[:4]
         serializer_activity_category = ActivityCategory2Serializer(activity_category, many=True)
 
+        activity_region = ActivityRegion.objects.all()
+        serializer_activity_region = NavBarActivityRegionSerializer(activity_region, many=True)
+
         departure_dates = DepartureDate.objects.all()
         serializer_departure_dates = DepartureDateSerializer(departure_dates, many=True)
         
@@ -328,6 +331,7 @@ def landing_page(request):
           "best_selling_activities":serializer_activities.data["best_selling_tours"],
           "banner_activity":serializer_activities.data["banner_tour"],
           "activity_categories":serializer_activity_category.data,
+          "activity_regions":serializer_activity_region.data,
           "team_members":teammembers_serializer.data,
           "testimonials":testimonial_serializer.data,
           "departure_dates":serializer_departure_dates.data,
