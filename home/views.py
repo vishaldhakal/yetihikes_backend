@@ -15,7 +15,7 @@ from datetime import datetime
 from activity.serializers import ActivityBooking2Serializer,DepartureDateSerializer,navBarActivitySmallSerializer
 from datetime import date
 from guide.models import TravelGuide
-from guide.serializers import TravelGuideSmallSerializer,NavBarTravelGuideSerializer
+from guide.serializers import TravelGuideSmallSerializer,NavBarTravelGuideSerializer,LandingTravelGuideSerializer
 from activity.models import Cupon
 
 
@@ -321,6 +321,9 @@ def landing_page(request):
         activity_region = ActivityRegion.objects.all()
         serializer_activity_region = NavBarActivityRegionSerializer(activity_region, many=True)
 
+        travel_guide = TravelGuide.objects.all()
+        serializer_travel_guide = LandingTravelGuideSerializer(travel_guide, many=True)
+
         departure_dates = DepartureDate.objects.all()
         serializer_departure_dates = DepartureDateSerializer(departure_dates, many=True)
         
@@ -332,6 +335,7 @@ def landing_page(request):
           "banner_activity":serializer_activities.data["banner_tour"],
           "activity_categories":serializer_activity_category.data,
           "activity_regions":serializer_activity_region.data,
+          "travel_guides":serializer_travel_guide.data,
           "team_members":teammembers_serializer.data,
           "testimonials":testimonial_serializer.data,
           "departure_dates":serializer_departure_dates.data,

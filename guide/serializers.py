@@ -42,6 +42,11 @@ class NavBarTravelGuideSerializer(serializers.ModelSerializer):
         model = TravelGuide
         fields = ('id','title','slug','icon')
 
+class LandingTravelGuideSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TravelGuide
+        fields = ('id','title','slug','icon','meta_title')
+
 class TravelGuideSlugSerializer(serializers.ModelSerializer):
     class Meta:
         model = TravelGuide
