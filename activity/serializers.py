@@ -64,6 +64,12 @@ class ActivityRegionSmallSerializer(serializers.ModelSerializer):
         fields = ['id','title','slug','image']
         depth = 1
 
+class RegionActivitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityRegion
+        fields = ['id','title']
+        depth = 1
+
 class ActivityRegionSlugSerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityRegion
@@ -140,9 +146,10 @@ class ActivitySmallSerializer(serializers.ModelSerializer):
 class LandingActivitySmallSerializer(serializers.ModelSerializer):
     group_price_available=serializers.SerializerMethodField()
     activity_category=ActivityDestinationSerializer(many=True)
+    activity_region=RegionActivitySerializer()
     class Meta:
         model = Activity
-        fields=('id','slug','activity_title','activity_category','location','duration','price','heroImg','coverImg','priceSale','ratings','difficulty_level','group_price_available','activity_type')
+        fields=('id','slug','activity_title','activity_category','activity_region','location','duration','price','heroImg','coverImg','priceSale','ratings','difficulty_level','group_price_available','activity_type')
         
     def get_group_price_available(self,obj):
         return ActivityPricing.objects.filter(activity=obj).exists()

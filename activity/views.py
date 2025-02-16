@@ -112,7 +112,7 @@ def activities_collection(request):
         act_des = request.GET.get("destination","All")
 
         activities = Activity.objects.all()
-        serializer_activities = ActivitySmallSerializer(activities, many=True)
+        serializer_activities = LandingActivitySmallSerializer(activities, many=True)
         
         activities_cat = ActivityCategory.objects.all()
         serializer_activities_cat = ActivityCategorySerializer(activities_cat, many=True)
