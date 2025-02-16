@@ -139,10 +139,11 @@ class ActivitySmallSerializer(serializers.ModelSerializer):
         
 class LandingActivitySmallSerializer(serializers.ModelSerializer):
     group_price_available=serializers.SerializerMethodField()
+    activity_category = ActivityDestinationSerializer()
 
     class Meta:
         model = Activity
-        fields=('id','slug','activity_title','location','duration','price','heroImg','coverImg','priceSale','ratings','difficulty_level','group_price_available','activity_type')
+        fields=('id','slug','activity_title','activity_category','location','duration','price','heroImg','coverImg','priceSale','ratings','difficulty_level','group_price_available','activity_type')
         
     def get_group_price_available(self,obj):
         return ActivityPricing.objects.filter(activity=obj).exists()
