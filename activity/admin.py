@@ -97,13 +97,14 @@ class ActivityAdmin(ModelAdmin):
                 "tour_highlights",
                 "tour_includes",
                 "tour_excludes",
-                "additional_info"
+                "additional_info",
+                "bag_pack"
             )
         }),
     )
 
     def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.name in ['tour_description', 'tour_highlights', 'tour_includes', 'tour_excludes', 'additional_info']:
+        if db_field.name in ['tour_description', 'tour_highlights', 'tour_includes', 'tour_excludes', 'additional_info','bag_pack']:
             kwargs['widget'] = TinyMCE()
         return super().formfield_for_dbfield(db_field, **kwargs)
 

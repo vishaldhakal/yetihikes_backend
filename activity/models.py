@@ -89,6 +89,7 @@ class Activity(models.Model):
     group_style = models.CharField(max_length=500,null=True,blank=True)
     best_season = models.CharField(max_length=500,null=True,blank=True)
     activity_type = models.CharField(max_length=500,null=True,blank=True)
+    bag_pack=tinymce_models.HTMLField(null=True,blank=True)
 
 
     class Meta:
