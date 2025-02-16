@@ -67,7 +67,7 @@ class ActivityRegionSmallSerializer(serializers.ModelSerializer):
 class RegionActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityRegion
-        fields = ['id','title']
+        fields = ['id','title','slug']
         depth = 1
 
 class ActivityRegionSlugSerializer(serializers.ModelSerializer):
@@ -96,7 +96,7 @@ class ActivityCategorySerializer(serializers.ModelSerializer):
 class ActivityDestinationSerializer(serializers.ModelSerializer):
     class Meta:
         model=ActivityCategory
-        fields=('id','title')
+        fields=('id','title','slug')
 
 class NavBarActivityCategorySerializer(serializers.ModelSerializer):
     class Meta:
