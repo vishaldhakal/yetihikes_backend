@@ -101,7 +101,7 @@ class ActivityDestinationSerializer(serializers.ModelSerializer):
 class NavBarActivityCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ActivityCategory
-        fields = ('id','title','image','image_alt_description')
+        fields = ('id','title','slug','image','image_alt_description')
 
 class ActivityCategorySlugSerializer(serializers.ModelSerializer):
     class Meta:
