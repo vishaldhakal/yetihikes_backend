@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Activity,ActivityCategory,ActivityBooking,Destination,ActivityTestimonial,ItineraryActivity,ActivityImage,ActivityRegion,Cupon,DepartureDate
-from .serializers import ActivityCategorySlugSerializer,ActivityTestimonialSerializer,ActivityBookingSerializer,ActivityRegionSlugSerializer,DestinationSerializerSmall,ActivitySlugSerializer,DestinationSerializer,ActivityCategorySerializer,ActivitySerializer,ItineraryActivitySerializer,ActivityImageSerializer,ActivitySmallSerializer,ActivityRegionSerializer,ActivityRegionSmallSerializer,CuponSerializer,CuponSerializer2,DepartureDateSerializer2,DepartureDateSerializer,LandingActivitySmallSerializer,ActivityDestinationSerializer
+from .serializers import ActivityCategorySlugSerializer,ActivityTestimonialSerializer,ActivityBookingSerializer,ActivityRegionSlugSerializer,DestinationSerializerSmall,ActivitySlugSerializer,DestinationSerializer,ActivityCategorySerializer,ActivitySerializer,ItineraryActivitySerializer,ActivityImageSerializer,ActivitySmallSerializer,ActivityRegionSerializer,ActivityRegionSmallSerializer,CuponSerializer,CuponSerializer2,DepartureDateSerializer2,DepartureDateSerializer,LandingActivitySmallSerializer,ActivityDestinationSerializer, RegionActivitySerializer
 import json
 from django.core import serializers
 from django.db.models import DateField
@@ -115,19 +115,16 @@ def activities_collection(request):
         serializer_activities = LandingActivitySmallSerializer(activities, many=True)
         
         activities_cat = ActivityCategory.objects.all()
-        serializer_activities_cat = ActivityCategorySerializer(activities_cat, many=True)
+        serializer_activities_cat = ActivityDestinationSerializer(activities_cat, many=True)
         
         activities_reg = ActivityRegion.objects.all()
-        serializer_activities_reg = ActivityRegionSerializer(activities_reg, many=True)
+        serializer_activities_reg = RegionActivitySerializer(activities_reg, many=True)
         
-        destinations = Destination.objects.all()
-        serializer_destinations = DestinationSerializer(destinations, many=True)
-        
+
         return Response({
             "activities":serializer_activities.data,
             "categories":serializer_activities_cat.data,
             "regions":serializer_activities_reg.data,
-            "destinations":serializer_destinations.data,
         })
 
 @api_view(['GET'])
