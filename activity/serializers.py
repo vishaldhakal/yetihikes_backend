@@ -1,6 +1,6 @@
 from .models import Activity,ActivityTestimonialImage,ActivityPricing,ActivityBooking,ActivityEnquiry,ActivityCategory,ItineraryActivity,ActivityImage,Destination,ActivityRegion,ActivityFAQ,ActivityTestimonial,Cupon,DepartureDate
 from rest_framework import serializers
-from blog.serializers import PostSmallSerializer
+from blog.serializers import PostSmallSerializer,LandingPagePostSerializer
 
 class ActivityEnquirySerializer(serializers.ModelSerializer):
     class Meta:
@@ -177,8 +177,8 @@ class ActivitySerializer(serializers.ModelSerializer):
     enquiries = ActivityEnquirySerializer(many=True,read_only=True)
     testimonials = ActivityTestimonialSerializer(many=True,read_only=True)
     prices = ActivityPricingSerializer(many=True,read_only=True)
-    related_activities = ActivitySmallSerializer(many=True,read_only=True)
-    related_blogs = PostSmallSerializer(many=True,read_only=True)
+    related_activities = LandingActivitySmallSerializer(many=True,read_only=True)
+    related_blogs = LandingPagePostSerializer(many=True,read_only=True)
     departure_dates = serializers.SerializerMethodField()
     
     def get_departure_dates(self,obj):
