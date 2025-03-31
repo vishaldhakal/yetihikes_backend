@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yeti Hikes - Booking Confirmation</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f7f7f7; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <table cellpadding="0" cellspacing="0" style="max-width: 600px; width: 100%; margin: 20px auto; background-color: #ffffff; border-radius: 10px; box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);">
+    <tr>
+      <td style="padding: 0;">
+        <!-- Header -->
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="padding: 30px 40px; text-align: center; background-color: #FFF8E8; border-radius: 10px 10px 0 0;">
+                <img src="https://admin.yetihikes.com/static/logo.png" alt="Yeti Hikes" style="max-width: 200px; height: auto; display: block; margin: 0 auto;">
+            </td>
+          </tr>
+        </table>
+
+        <!-- Content -->
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="padding: 30px 40px;">
+              <p style="font-size: 18px; color: #333; margin: 0 0 20px 0;">Hi {{name}},</p>
+              <p style="line-height: 1.6; color: #555; margin: 0 0 25px 0;">
+                Thank you for booking with Yeti Hikes! We have received your booking for {{activity}} and will process it shortly.
+              </p>
+
+              <!-- Booking Details -->
+              <div style="background-color: #f9f9f9; padding: 25px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #fdb000;">
+                <h3 style="color: #333; margin: 0 0 15px 0; font-weight: 600;">Your Booking Details:</h3>
+                <table width="100%" cellpadding="0" cellspacing="0" style="color: #555;">
+                  <tr>
+                    <td width="140" style="padding: 8px 0;"><p style="color: #FDB000; margin: 0; font-weight: 600;">Activity:</p></td>
+                    <td style="padding: 8px 0;"><p style="margin: 0;"><a href="https://yetihikes.com/activity/{{slug}}">{{activity}}</a></p></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;"><p style="color: #FDB000; margin: 0; font-weight: 600;">Booking Date:</p></td>
+                    <td style="padding: 8px 0;"><p style="margin: 0;">{{booking_date}}</p></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;"><p style="color: #FDB000; margin: 0; font-weight: 600;">Name:</p></td>
+                    <td style="padding: 8px 0;"><p style="margin: 0;">{{name}}</p></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;"><p style="color: #FDB000; margin: 0; font-weight: 600;">Email:</p></td>
+                    <td style="padding: 8px 0;"><p style="margin: 0;">{{email}}</p></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;"><p style="color: #FDB000; margin: 0; font-weight: 600;">Phone:</p></td>
+                    <td style="padding: 8px 0;"><p style="margin: 0;">{{phone}}</p></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;"><p style="color: #FDB000; margin: 0; font-weight: 600;">Number of Guests:</p></td>
+                    <td style="padding: 8px 0;"><p style="margin: 0;">{{no_of_guests}}</p></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;"><p style="color: #FDB000; margin: 0; font-weight: 600;">Total Price:</p></td>
+                    <td style="padding: 8px 0;"><p style="margin: 0;">${{total_price}}</p></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;" colspan="2">
+                      <p style="color: #FDB000; margin: 0 0 8px 0; font-weight: 600;">Additional Message:</p>
+                      <p style="margin: 0; line-height: 1.6;">{{message}}</p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <p style="line-height: 1.6; color: #555; margin: 0 0 25px 0;">
+                We will contact you shortly with further details about your booking. If you have any questions in the meantime, please don't hesitate to reach out to us.
+              </p>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Footer -->
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="padding: 25px 40px; background-color: #FFF8E8; border-radius: 0 0 10px 10px; text-align: center;">
+              <p style="margin: 0 0 15px 0; font-size: 16px; color: #555; font-weight: 600;">
+                Best regards,<br>
+                <span style="color: #FDB000;">The Yeti Hikes Team</span>
+              </p>
+              
+              <!-- Contact Info -->
+              <p style="margin: 0 0 15px 0; font-size: 14px; color: #666;">
+                Paknajol Marg, Thamel, Kathmandu, Nepal<br>
+                <a href="mailto:info@yetihikes.com" style="color: #666; text-decoration: none;">info@yetihikes.com</a><br>
+                +977 985-1316676 (Hotline Number)
+              </p>
+              
+              <!-- Social Icons -->
+              <table cellpadding="0" cellspacing="0" style="margin: 0 auto 15px auto;">
+                <tr>
+                  <td style="padding: 0 10px;">
+                    <a href="https://www.facebook.com/yetihikes/" style="text-decoration: none;">
+                      <img src="https://admin.yetihikes.com/static/facebook.png" alt="Facebook" width="20" height="20">
+                    </a>
+                  </td>
+                  <td style="padding: 0 10px;">
+                    <a href="https://www.instagram.com/yetihikes/" style="text-decoration: none;">
+                      <img src="https://admin.yetihikes.com/static/instagram.png" alt="Instagram" width="20" height="20">
+                    </a>
+                  </td>
+                  <td style="padding: 0 10px;">
+                    <a href="https://www.linkedin.com/company/yetihikes/" style="text-decoration: none;">
+                      <img src="https://admin.yetihikes.com/static/linkedin.png" alt="LinkedIn" width="20" height="20">
+                    </a>
+                  </td>
+                  <td style="padding: 0 10px;">
+                    <a href="https://www.tripadvisor.co.uk/Attraction_Review-g293890-d28127088-Reviews-Yeti_Hikes_Pvt_Ltd-Kathmandu_Kathmandu_Valley_Bagmati_Zone_Central_Region.html" style="text-decoration: none;">
+                      <img src="https://admin.yetihikes.com/static/tripadvisor.png" alt="TripAdvisor" width="20" height="20">
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="margin: 0; font-size: 12px; color: #999;">
+                © 2025 Yeti Hikes. All rights reserved.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

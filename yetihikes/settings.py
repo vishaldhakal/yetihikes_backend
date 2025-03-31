@@ -20,19 +20,20 @@ SECRET_KEY = 'django-insecure-s$io6_xls$2hgu)%n(8w8&4pfiw0-vzju-ow!^b(2h2*wc!m3i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['68.183.89.163','.yetihikes.com','king-prawn-app-t9tni.ondigitalocean.app','localhost','127.0.0.1','4963-110-44-120-22.ngrok.io']
+ALLOWED_HOSTS = ['68.183.89.163', '.yetihikes.com', 'king-prawn-app-t9tni.ondigitalocean.app',
+                 'localhost', '127.0.0.1', '4963-110-44-120-22.ngrok.io']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "unfold",  
-    "unfold.contrib.filters",  
-    "unfold.contrib.forms",  
-    "unfold.contrib.inlines",  
-    "unfold.contrib.import_export",  
-    "unfold.contrib.guardian",  
-    "unfold.contrib.simple_history",  
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
+    "unfold.contrib.inlines",
+    "unfold.contrib.import_export",
+    "unfold.contrib.guardian",
+    "unfold.contrib.simple_history",
     'ckeditor',
     'ckeditor_uploader',
     'django.contrib.admin',
@@ -97,8 +98,8 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = None
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
- """
+} """
+
 
 DATABASES = {
     "default": {
@@ -187,7 +188,8 @@ SUMMERNOTE_CONFIG = {
         'height': '500px',
         'toolbar': [
             ['style', ['style',]],
-            ['font', ['fontname', 'fontsize', 'bold', 'italic', 'strikethrough', 'clear',]],
+            ['font', ['fontname', 'fontsize', 'bold',
+                      'italic', 'strikethrough', 'clear',]],
             ['color', ['forecolor', 'backcolor', ]],
             ['para', ['ul', 'ol', 'height']],
             ['insert', ['link']],
@@ -199,8 +201,8 @@ SUMMERNOTE_CONFIG = {
 SUMMERNOTE_THEME = 'bs4'
 
 TINYMCE_DEFAULT_CONFIG = {
-    "height" : "780",
-    "width" : "780",
+    "height": "780",
+    "width": "780",
     "entity_encoding": "raw",
     "menubar": "file edit view insert format tools table help",
     "plugins": 'print preview paste importcss searchreplace autolink autosave save code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap emoticons quickbars',
@@ -238,4 +240,3 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 CSRF_TRUSTED_ORIGINS = ['https://4963-110-44-120-22.ngrok.io',]
-
