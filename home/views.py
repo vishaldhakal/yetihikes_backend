@@ -52,7 +52,10 @@ def send_brevo_contact_email(name, email, phone, message):
             sender={"email": "info@yetihikes.com", "name": "Yeti Hikes"},
             subject=f"Contact Form Submission from {name}",
             html_content=html_content,
-            reply_to={"email": "info@yetihikes.com", "name": "Yeti Hikes"}
+            reply_to=[
+                {"email": "yetihikes790@gmail.com", "name": "Yeti Hikes"},
+                {"email": email, "name": name}
+            ]
         )
 
         # Send email
@@ -139,7 +142,10 @@ def send_brevo_inquiry_email(name, email, phone, message, activity, slug):
             sender={"email": "info@yetihikes.com", "name": "Yeti Hikes"},
             subject=f"Activity Inquiry from {name} - {activity}",
             html_content=html_content,
-            reply_to={"email": "info@yetihikes.com", "name": "Yeti Hikes"}
+            reply_to=[
+                {"email": "yetihikes790@gmail.com", "name": "Yeti Hikes"},
+                {"email": email, "name": name}
+            ]
         )
 
         api_instance.send_transac_email(send_smtp_email)
@@ -227,7 +233,10 @@ def send_brevo_plan_trip_email(context):
             sender={"email": "info@yetihikes.com", "name": "Yeti Hikes"},
             subject=f"Trip Plan Request from {context['name']} - {context['activity_title']}",
             html_content=html_content,
-            reply_to={"email": "info@yetihikes.com", "name": "Yeti Hikes"}
+            reply_to=[
+                {"email": "yetihikes790@gmail.com", "name": "Yeti Hikes"},
+                {"email": context["email"], "name": context["name"]}
+            ]
         )
 
         api_instance.send_transac_email(send_smtp_email)
@@ -313,7 +322,10 @@ def send_brevo_booking_email(context):
             sender={"email": "info@yetihikes.com", "name": "Yeti Hikes"},
             subject=f"Booking Confirmation from {context['name']} - {context['activity']}",
             html_content=html_content,
-            reply_to={"email": "info@yetihikes.com", "name": "Yeti Hikes"}
+            reply_to=[
+                {"email": "yetihikes790@gmail.com", "name": "Yeti Hikes"},
+                {"email": context["email"], "name": context["name"]}
+            ]
         )
 
         api_instance.send_transac_email(send_smtp_email)
