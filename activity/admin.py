@@ -119,7 +119,8 @@ class ActivityTestimonialAdmin(ModelAdmin):
                 "activity",
                 ("name", "title"),
                 "review",
-                "rating"
+                "rating",
+                "source"
             )
         }),
     )
