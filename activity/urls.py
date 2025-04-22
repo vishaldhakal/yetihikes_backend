@@ -6,7 +6,7 @@ urlpatterns = [
     path('activities/', views.activities_collection),
     path('activities-slug/', views.activities_slug),
     path('activities-search/', views.activities_search),
-    path('activitiy-categories-slug/', views.activities_cat_slug),
+    path('activity-categories-slug/', views.activities_cat_slug),
     path('activities-regions/', views.activities_regions),
     path('activities-regions/<str:slug>/', views.activities_region_slug),
     path('activities-region-slug/', views.activities_reg_slug),
