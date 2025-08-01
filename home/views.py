@@ -688,7 +688,10 @@ def landing_testimonials(request):
 def landing_departure_dates(request):
     """Get departure dates for landing page with optimized field selection"""
     if request.method == 'GET':
-        departure_dates = DepartureDate.objects.only(
+        today = date.today()
+        departure_dates = DepartureDate.objects.filter(
+            date__gt=today
+        ).only(
             'id', 'date', 'booked_seats', 'max_seats'
         )
         serializer_departure_dates = DepartureDateSerializer(
