@@ -21,7 +21,8 @@ SECRET_KEY = 'django-insecure-s$io6_xls$2hgu)%n(8w8&4pfiw0-vzju-ow!^b(2h2*wc!m3i
 DEBUG = True
 
 ALLOWED_HOSTS = ['68.183.89.163', '.yetihikes.com', 'king-prawn-app-t9tni.ondigitalocean.app',
-                 'localhost', '127.0.0.1', '4963-110-44-120-22.ngrok.io']
+                 'localhost', '127.0.0.1', 'https://supports-needle-computed-needle.trycloudflare.com', '4963-110-44-120-22.ngrok.io']
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -239,4 +240,7 @@ TINYMCE_DEFAULT_CONFIG = {
     "content_style": "body { font-family:Roboto,Helvetica,Arial,sans-serif; font-size:14px }",
 }
 
-CSRF_TRUSTED_ORIGINS = ['https://4963-110-44-120-22.ngrok.io',]
+CORS_ALLOWED_ORIGINS = [
+    'https://supports-needle-computed-needle.trycloudflare.com',]
+CSRF_TRUSTED_ORIGINS = [
+    'https://supports-needle-computed-needle.trycloudflare.com',]

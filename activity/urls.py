@@ -3,6 +3,12 @@ from . import views
 
 urlpatterns = [
     path('activity-detail/<str:slug>/', views.activities_single),
+    path('activity-seo/<str:slug>/', views.activity_seo_data),
+    path('activity-jsonld/<str:slug>/', views.activity_jsonld_data),
+    path('activity-header/<str:slug>/', views.activity_header_data),
+    path('activity-related/<str:slug>/', views.related_activities_data),
+    path('activity-blogs/<str:slug>/', views.related_blogs_data),
+    path('activity-reserve/<str:slug>/', views.activity_reserve_data),
     path('activities/', views.activities_collection),
     path('activities-slug/', views.activities_slug),
     path('activities-search/', views.activities_search),

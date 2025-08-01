@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from blog.serializers import LandingPagePostSerializer
 from .models import Activity, ActivityCategory, ActivityBooking, Destination, ActivityTestimonial, ItineraryActivity, ActivityImage, ActivityRegion, Cupon, DepartureDate
-from .serializers import ActivityCategorySlugSerializer, ActivityTestimonialSerializer, ActivityBookingSerializer, ActivityRegionSlugSerializer, DestinationSerializerSmall, ActivitySlugSerializer, DestinationSerializer, ActivityCategorySerializer, ActivitySerializer, ItineraryActivitySerializer, ActivityImageSerializer, ActivitySmallSerializer, ActivityRegionSerializer, ActivityRegionSmallSerializer, CuponSerializer, CuponSerializer2, DepartureDateSerializer2, DepartureDateSerializer, LandingActivitySmallSerializer, ActivityDestinationSerializer, RegionActivitySerializer
+from .serializers import ActivityCategorySlugSerializer, ActivityTestimonialSerializer, ActivityBookingSerializer, ActivityRegionSlugSerializer, DestinationSerializerSmall, ActivitySlugSerializer, DestinationSerializer, ActivityCategorySerializer, ActivitySerializer, ItineraryActivitySerializer, ActivityImageSerializer, ActivitySmallSerializer, ActivityRegionSerializer, ActivityRegionSmallSerializer, CuponSerializer, CuponSerializer2, DepartureDateSerializer2, DepartureDateSerializer, LandingActivitySmallSerializer, ActivityDestinationSerializer, RegionActivitySerializer, ActivityJsonldSerializer, ActivityPricingSerializer
 import json
 from django.core import serializers
 from django.db.models import DateField
@@ -292,7 +294,153 @@ def activities_single(request, slug):
                 ActivityBookingSerializer(boki, many=True).data)
 
         serializer_activities = ActivitySerializer(activity)
-        return Response({"data": serializer_activities.data, "bookings": grouped_bookings, "dates": unique_dates, "testimonials": testimonials_ser.data, "cupons": serializer_cupons.data})
+        return Response({
+            "data": serializer_activities.data,
+            "bookings": grouped_bookings,
+            "dates": unique_dates,
+            "testimonials": testimonials_ser.data,
+            "cupons": serializer_cupons.data
+        })
+
+
+@api_view(['GET'])
+def activity_seo_data(request, slug):
+    if request.method == 'GET':
+        activity = Activity.objects.only(
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
+            'activity_title',
+            'coverImg'
+        ).get(slug=slug)
+        seo_data = {
+            "meta_title": activity.meta_title,
+            "meta_description": activity.meta_description,
+            "meta_keywords": activity.meta_keywords,
+            "activity_title": activity.activity_title,
+            "coverImg": activity.coverImg.url if activity.coverImg else None
+        }
+        return Response(seo_data)
+
+
+@api_view(['GET'])
+def activity_jsonld_data(request, slug):
+    if request.method == 'GET':
+        activity = Activity.objects.only(
+            'activity_title',
+            'coverImg',
+            'meta_description',
+            'priceSale'
+        ).prefetch_related(
+            'activity_category',
+            'itinerary'
+        ).get(slug=slug)
+        serializer_activity = ActivityJsonldSerializer(activity)
+        return Response(serializer_activity.data)
+
+
+@api_view(['GET'])
+def activity_header_data(request, slug):
+    if request.method == 'GET':
+        activity = Activity.objects.only(
+            'activity_title',
+            'heroImg'
+        ).get(slug=slug)
+        return Response({
+            "activity_title": activity.activity_title,
+            "heroImg": activity.heroImg.url if activity.heroImg else None
+        })
+
+
+@api_view(['GET'])
+def related_activities_data(request, slug):
+    if request.method == 'GET':
+        activity = Activity.objects.only('slug').get(slug=slug)
+        related_activities = activity.related_activities.only(
+            'id', 'slug', 'activity_title', 'location', 'duration', 'price',
+            'heroImg', 'coverImg', 'priceSale', 'ratings', 'difficulty_level', 'activity_type'
+        ).prefetch_related(
+            'activity_category',
+            'activity_region'
+        )
+        serializer_related_activities = LandingActivitySmallSerializer(
+            related_activities, many=True)
+        return Response(serializer_related_activities.data)
+
+
+@api_view(['GET'])
+def related_blogs_data(request, slug):
+    if request.method == 'GET':
+        activity = Activity.objects.only('slug').get(slug=slug)
+        related_blogs = activity.related_blogs.only(
+            'id', 'thumbnail_image', 'updated_at', 'created_at',
+            'blog_duration_to_read', 'slug', 'title',
+            'thumbnail_image_alt_description', 'meta_description'
+        )
+        serializer_related_blogs = LandingPagePostSerializer(
+            related_blogs, many=True)
+        return Response(serializer_related_blogs.data)
+
+
+@api_view(['GET'])
+def activity_reserve_data(request, slug):
+    if request.method == 'GET':
+        # Get activity data with only required fields based on ReservationTourData interface
+        activity = Activity.objects.only(
+            'id', 'activity_title', 'priceSale', 'price', 'duration',
+            'max_group_size', 'trip_grade', 'location', 'heroImg', 'coverImg'
+        ).prefetch_related(
+            'prices'  # For the prices field
+        ).get(slug=slug)
+
+        # Get active coupons with only required fields based on Cupon interface
+        cupons = Cupon.objects.only(
+            'id', 'code', 'discount', 'active', 'valid_from', 'valid_to'
+        ).filter(
+            active=True,
+            valid_from__lte=timezone.now().date(),
+            valid_to__gte=timezone.now().date()
+        )
+
+        # Create tour data matching ReservationTourData interface
+        tour_data = {
+            'id': activity.id,
+            'activity_title': activity.activity_title,
+            'priceSale': activity.priceSale,
+            'price': activity.price,
+            'duration': activity.duration,
+            'max_group_size': activity.max_group_size,
+            'trip_grade': activity.trip_grade,
+            'location': activity.location,
+            'heroImg': activity.heroImg.url if activity.heroImg else None,
+            'coverImg': activity.coverImg.url if activity.coverImg else None,
+            'prices': ActivityPricingSerializer(activity.prices.all(), many=True).data
+        }
+
+        # Create coupons data matching Cupon interface
+        coupons_data = []
+        for cupon in cupons:
+            coupons_data.append({
+                'id': cupon.id,
+                'code': cupon.code,
+                'discount': cupon.discount,
+                'active': cupon.active,
+                'valid_from': cupon.valid_from.isoformat() if cupon.valid_from else None,
+                'valid_to': cupon.valid_to.isoformat() if cupon.valid_to else None
+            })
+
+        # Return both tour and coupon data
+        return Response({
+            'tour': tour_data,
+            'coupons': coupons_data
+        })
+
+
+@api_view(['GET'])
+def travel_tour_details(request, slug):
+    if request.method == 'GET':
+        activity = Activity.objects.only('slug').get(slug=slug)
+        return Response(activity.activity_title)
 
 
 @api_view(['GET'])
