@@ -528,36 +528,233 @@ def navbar(request):
 
 
 @api_view(['GET'])
+def landing_recent_posts(request):
+    """Get recent posts for landing page with optimized field selection"""
+    if request.method == 'GET':
+        posts = Post.objects.only(
+            'id', 'thumbnail_image', 'updated_at', 'created_at',
+            'blog_duration_to_read', 'slug', 'title',
+            'thumbnail_image_alt_description', 'meta_description'
+        )[:5]
+        posts_serializer = LandingPagePostSerializer(posts, many=True)
+        return Response({
+            "recent_posts": posts_serializer.data,
+        })
+
+
+@api_view(['GET'])
+def get_featured_tours(request):
+    """Get featured tours for landing page"""
+    if request.method == 'GET':
+        try:
+            activities = FeaturedTour.objects.only('id').get()
+            serializer_activities = LandingFeaturedTourSerializer(activities)
+            featured_tours = serializer_activities.data["featured_tours"][:3]
+
+            return Response({
+                "featured_activities": featured_tours,
+            })
+        except FeaturedTour.DoesNotExist:
+            return Response({
+                "featured_activities": [],
+            })
+
+
+@api_view(['GET'])
+def get_popular_tours(request):
+    """Get popular tours for landing page"""
+    if request.method == 'GET':
+        try:
+            activities = FeaturedTour.objects.only('id').get()
+            serializer_activities = LandingFeaturedTourSerializer(activities)
+            popular_tours = serializer_activities.data["popular_tours"][:3]
+
+            return Response({
+                "popular_activities": popular_tours,
+            })
+        except FeaturedTour.DoesNotExist:
+            return Response({
+                "popular_activities": [],
+            })
+
+
+@api_view(['GET'])
+def get_best_selling_tours(request):
+    """Get best selling tours for landing page"""
+    if request.method == 'GET':
+        try:
+            activities = FeaturedTour.objects.only('id').get()
+            serializer_activities = LandingFeaturedTourSerializer(activities)
+            best_selling_tours = serializer_activities.data["best_selling_tours"][:3]
+
+            return Response({
+                "best_selling_activities": best_selling_tours,
+            })
+        except FeaturedTour.DoesNotExist:
+            return Response({
+                "best_selling_activities": [],
+            })
+
+
+@api_view(['GET'])
+def get_banner_tour(request):
+    """Get banner tour for landing page"""
+    if request.method == 'GET':
+        try:
+            activities = FeaturedTour.objects.only('id').get()
+            serializer_activities = LandingFeaturedTourSerializer(activities)
+            banner_tour = serializer_activities.data["banner_tour"][:1]
+
+            return Response({
+                "banner_activity": banner_tour,
+            })
+        except FeaturedTour.DoesNotExist:
+            return Response({
+                "banner_activity": [],
+            })
+
+
+@api_view(['GET'])
+def landing_activity_categories(request):
+    """Get activity categories for landing page with optimized field selection"""
+    if request.method == 'GET':
+        activity_category = ActivityCategory.objects.only(
+            'title', 'image', 'image_alt_description', 'subtitle', 'slug'
+        )[:4]
+        serializer_activity_category = ActivityCategory2Serializer(
+            activity_category, many=True)
+        return Response({
+            "activity_categories": serializer_activity_category.data,
+        })
+
+
+@api_view(['GET'])
+def landing_activity_regions(request):
+    """Get activity regions for landing page with optimized field selection"""
+    if request.method == 'GET':
+        activity_region = ActivityRegion.objects.only(
+            'id', 'title', 'image', 'image_alt_description', 'slug'
+        )
+        serializer_activity_region = NavBarActivityRegionSerializer(
+            activity_region, many=True)
+        return Response({
+            "activity_regions": serializer_activity_region.data,
+        })
+
+
+@api_view(['GET'])
+def landing_travel_guides(request):
+    """Get travel guides for landing page with optimized field selection"""
+    if request.method == 'GET':
+        travel_guide = TravelGuide.objects.only(
+            'id', 'title', 'slug', 'icon', 'meta_title'
+        )
+        serializer_travel_guide = LandingTravelGuideSerializer(
+            travel_guide, many=True)
+        return Response({
+            "travel_guides": serializer_travel_guide.data,
+        })
+
+
+@api_view(['GET'])
+def landing_team_members(request):
+    """Get team members for landing page with optimized field selection"""
+    if request.method == 'GET':
+        teammembers = TeamMember.objects.only(
+            'id', 'name', 'role', 'photo', 'email',
+            'facebook', 'instagram', 'linkedin', 'twitter'
+        )
+        teammembers_serializer = LandingTeamMemberSerializer(
+            teammembers, many=True)
+        return Response({
+            "team_members": teammembers_serializer.data,
+        })
+
+
+@api_view(['GET'])
+def landing_testimonials(request):
+    """Get testimonials for landing page with optimized field selection"""
+    if request.method == 'GET':
+        testimonial = Testimonial.objects.only(
+            'id', 'name', 'role', 'avatar', 'title', 'source', 'review', 'rating'
+        )[:6]
+        testimonial_serializer = TestimonialSerializer(testimonial, many=True)
+        return Response({
+            "testimonials": testimonial_serializer.data,
+        })
+
+
+@api_view(['GET'])
+def landing_departure_dates(request):
+    """Get departure dates for landing page with optimized field selection"""
+    if request.method == 'GET':
+        departure_dates = DepartureDate.objects.only(
+            'id', 'date', 'booked_seats', 'max_seats'
+        )
+        serializer_departure_dates = DepartureDateSerializer(
+            departure_dates, many=True)
+        return Response({
+            "departure_dates": serializer_departure_dates.data,
+        })
+
+
+@api_view(['GET'])
 def landing_page(request):
+    """Main landing page endpoint that combines all optimized data"""
     if request.method == 'GET':
         today = date.today()
 
-        teammembers = TeamMember.objects.all()
+        # Get team members
+        teammembers = TeamMember.objects.only(
+            'id', 'name', 'role', 'photo', 'email',
+            'facebook', 'instagram', 'linkedin', 'twitter'
+        )
         teammembers_serializer = LandingTeamMemberSerializer(
             teammembers, many=True)
 
-        testimonial = Testimonial.objects.all()
+        # Get testimonials
+        testimonial = Testimonial.objects.only(
+            'id', 'name', 'role', 'avatar', 'title', 'source', 'review', 'rating'
+        )
         testimonial_serializer = TestimonialSerializer(testimonial, many=True)
 
-        posts = Post.objects.all()[:5]
+        # Get recent posts
+        posts = Post.objects.only(
+            'id', 'thumbnail_image', 'updated_at', 'created_at',
+            'blog_duration_to_read', 'slug', 'title',
+            'thumbnail_image_alt_description', 'meta_description'
+        )[:5]
         posts_serializer = LandingPagePostSerializer(posts, many=True)
 
-        activities = FeaturedTour.objects.get()
+        # Get featured activities
+        activities = FeaturedTour.objects.only('id').get()
         serializer_activities = LandingFeaturedTourSerializer(activities)
 
-        activity_category = ActivityCategory.objects.all()[:4]
+        # Get activity categories
+        activity_category = ActivityCategory.objects.only(
+            'title', 'image', 'image_alt_description', 'subtitle', 'slug'
+        )[:4]
         serializer_activity_category = ActivityCategory2Serializer(
             activity_category, many=True)
 
-        activity_region = ActivityRegion.objects.all()
+        # Get activity regions
+        activity_region = ActivityRegion.objects.only(
+            'id', 'title', 'image', 'image_alt_description', 'slug'
+        )
         serializer_activity_region = NavBarActivityRegionSerializer(
             activity_region, many=True)
 
-        travel_guide = TravelGuide.objects.all()
+        # Get travel guides
+        travel_guide = TravelGuide.objects.only(
+            'id', 'title', 'slug', 'icon', 'meta_title'
+        )
         serializer_travel_guide = LandingTravelGuideSerializer(
             travel_guide, many=True)
 
-        departure_dates = DepartureDate.objects.all()
+        # Get departure dates
+        departure_dates = DepartureDate.objects.only(
+            'id', 'date', 'booked_seats', 'max_seats'
+        )
         serializer_departure_dates = DepartureDateSerializer(
             departure_dates, many=True)
 

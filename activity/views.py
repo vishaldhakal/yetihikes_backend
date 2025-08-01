@@ -437,13 +437,6 @@ def activity_reserve_data(request, slug):
 
 
 @api_view(['GET'])
-def travel_tour_details(request, slug):
-    if request.method == 'GET':
-        activity = Activity.objects.only('slug').get(slug=slug)
-        return Response(activity.activity_title)
-
-
-@api_view(['GET'])
 def activity_categories_collection(request):
     if request.method == 'GET':
         activity_category = ActivityCategory.objects.all()
