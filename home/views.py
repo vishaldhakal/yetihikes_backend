@@ -691,7 +691,7 @@ def landing_departure_dates(request):
         today = date.today()
         departure_dates = DepartureDate.objects.filter(
             date__gt=today
-        ).only(
+        ).order_by('date').only(
             'id', 'date', 'booked_seats', 'max_seats'
         )
         serializer_departure_dates = DepartureDateSerializer(
