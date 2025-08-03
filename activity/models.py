@@ -96,6 +96,9 @@ class Activity(models.Model):
     best_season = models.CharField(max_length=500, null=True, blank=True)
     activity_type = models.CharField(max_length=500, null=True, blank=True)
     bag_pack = tinymce_models.HTMLField(null=True, blank=True)
+    banner_image = models.FileField(null=True, blank=True)
+    avatar_image = models.FileField(null=True, blank=True)
+
 
     class Meta:
         ordering = ['createdAt']
