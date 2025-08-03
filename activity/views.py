@@ -387,7 +387,7 @@ def activity_reserve_data(request, slug):
     if request.method == 'GET':
         # Get activity data with only required fields based on ReservationTourData interface
         activity = Activity.objects.only(
-            'id', 'activity_title', 'priceSale', 'price', 'duration',
+            'id', 'slug', 'activity_title', 'priceSale', 'price', 'duration',
             'max_group_size', 'trip_grade', 'location', 'heroImg', 'coverImg'
         ).prefetch_related(
             'prices'  # For the prices field
@@ -405,6 +405,7 @@ def activity_reserve_data(request, slug):
         # Create tour data matching ReservationTourData interface
         tour_data = {
             'id': activity.id,
+            'slug': activity.slug,
             'activity_title': activity.activity_title,
             'priceSale': activity.priceSale,
             'price': activity.price,
