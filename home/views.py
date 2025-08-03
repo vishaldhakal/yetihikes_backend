@@ -549,7 +549,7 @@ def get_featured_tours(request):
         try:
             activities = FeaturedTour.objects.only('id').get()
             serializer_activities = LandingFeaturedTourSerializer(activities)
-            featured_tours = serializer_activities.data["featured_tours"][:3]
+            featured_tours = serializer_activities.data["featured_tours"][:4]
 
             return Response({
                 "featured_activities": featured_tours,
@@ -567,7 +567,7 @@ def get_popular_tours(request):
         try:
             activities = FeaturedTour.objects.only('id').get()
             serializer_activities = LandingFeaturedTourSerializer(activities)
-            popular_tours = serializer_activities.data["popular_tours"][:3]
+            popular_tours = serializer_activities.data["popular_tours"][:4]
 
             return Response({
                 "popular_activities": popular_tours,
@@ -585,7 +585,7 @@ def get_best_selling_tours(request):
         try:
             activities = FeaturedTour.objects.only('id').get()
             serializer_activities = LandingFeaturedTourSerializer(activities)
-            best_selling_tours = serializer_activities.data["best_selling_tours"][:3]
+            best_selling_tours = serializer_activities.data["best_selling_tours"][:4]
 
             return Response({
                 "best_selling_activities": best_selling_tours,
