@@ -189,7 +189,7 @@ class LandingActivitySmallSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activity
         fields = ('id', 'slug', 'activity_title', 'activity_category', 'activity_region', 'location', 'duration', 'price',
-                  'heroImg', 'coverImg', 'avatar_image','priceSale', 'ratings', 'difficulty_level', 'group_price_available', 'activity_type')
+                  'heroImg', 'coverImg', 'avatar_image', 'priceSale', 'ratings', 'difficulty_level', 'group_price_available', 'activity_type')
 
     def get_group_price_available(self, obj):
         return ActivityPricing.objects.filter(activity=obj).exists()
@@ -222,6 +222,16 @@ class LandingBannerActivitySmallSerializer(serializers.ModelSerializer):
         fields = ('id', 'slug', 'activity_title', 'location', 'duration', 'price',
                   'heroImg', 'coverImg', 'priceSale', 'ratings', 'activity_region')
         depth = 1
+
+
+class LandingBannerActivitySmallSerializer2(serializers.ModelSerializer):
+    activity_region = RegionActivitySerializer()
+
+    class Meta:
+        model = Activity
+        fields = ('id', 'slug', 'activity_title', 'location', 'duration', 'price',
+                  'heroImg', 'activity_region')
+
 
 
 class navBarActivitySmallSerializer(serializers.ModelSerializer):

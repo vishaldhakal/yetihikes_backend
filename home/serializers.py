@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import TeamMember,FeaturedTour,Testimonial,SiteConfiguration,Affiliations,Partners,TreekingNavDropdown,DestinationNavDropdown,OtherActivitiesNavDropdown,ClimbingNavDropdown,InnerDropdown,FAQ,FAQCategory,LegalDocument,GuideDropdown
-from activity.serializers import NavBarActivitySmallSerializer,ActivitySmallSerializer,NavBarActivityRegionSerializer,DestinationSerializer,NavBarDestinationSerializer,NavBarActivityCategorySerializer,LandingActivitySmallSerializer,LandingBannerActivitySmallSerializer
+from activity.serializers import LandingBannerActivitySmallSerializer2, NavBarActivitySmallSerializer,ActivitySmallSerializer,NavBarActivityRegionSerializer,DestinationSerializer,NavBarDestinationSerializer,NavBarActivityCategorySerializer,LandingActivitySmallSerializer,LandingBannerActivitySmallSerializer
 from guide.serializers import TravelGuideSerializer
 
 
@@ -28,7 +28,7 @@ class LandingFeaturedTourSerializer(serializers.ModelSerializer):
     featured_tours = LandingActivitySmallSerializer(many=True)
     popular_tours = LandingActivitySmallSerializer(many=True)
     best_selling_tours = LandingActivitySmallSerializer(many=True)
-    banner_tour = LandingBannerActivitySmallSerializer(many=True)
+    banner_tour = LandingBannerActivitySmallSerializer2(many=True)
     class Meta:
         model = FeaturedTour
         fields = '__all__'
