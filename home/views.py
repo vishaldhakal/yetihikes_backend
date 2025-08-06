@@ -824,7 +824,7 @@ def teams_id(request):
 @api_view(['GET'])
 def teams(request):
     if request.method == 'GET':
-        teammembers = TeamMember.objects.order_by('order')[:4]
+        teammembers = TeamMember.objects.all()[:4]
         teammembers_serializer = LandingTeamMemberSerializer(
             teammembers, many=True)
 
