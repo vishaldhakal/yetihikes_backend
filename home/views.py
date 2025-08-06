@@ -663,7 +663,7 @@ def landing_team_members(request):
         teammembers = TeamMember.objects.only(
             'id', 'name', 'role', 'photo', 'email',
             'facebook', 'instagram', 'linkedin', 'twitter'
-        )
+        )[:4]
         teammembers_serializer = LandingTeamMemberSerializer(
             teammembers, many=True)
         return Response({
@@ -824,7 +824,7 @@ def teams_id(request):
 @api_view(['GET'])
 def teams(request):
     if request.method == 'GET':
-        teammembers = TeamMember.objects.all()[:4]
+        teammembers = TeamMember.objects.all()
         teammembers_serializer = LandingTeamMemberSerializer(
             teammembers, many=True)
 
