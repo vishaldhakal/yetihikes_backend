@@ -663,7 +663,7 @@ def landing_team_members(request):
         teammembers = TeamMember.objects.only(
             'id', 'name', 'role', 'photo', 'email',
             'facebook', 'instagram', 'linkedin', 'twitter'
-        )[:4]
+        )[:5]
         teammembers_serializer = LandingTeamMemberSerializer(
             teammembers, many=True)
         return Response({
