@@ -534,7 +534,8 @@ def landing_recent_posts(request):
         posts = Post.objects.only(
             'id', 'thumbnail_image', 'updated_at', 'created_at',
             'blog_duration_to_read', 'slug', 'title',
-            'thumbnail_image_alt_description', 'meta_description'
+            'thumbnail_image_alt_description', 'meta_description',
+            'banner_image', 'banner_image_alt_description'
         )[:5]
         posts_serializer = LandingPagePostSerializer(posts, many=True)
         return Response({
